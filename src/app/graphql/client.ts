@@ -3,7 +3,6 @@ import { execute, makePromise } from "apollo-link";
 import { ApolloClient } from "@apollo/client";
 import ExtSchemaLink from "./schema/ExtSchemaLink";
 import { InMemoryCache } from "@apollo/client";
-import { resolvers, typeDefs, getInitialData } from "./clientSchema";
 import schema from "./schema/schema";
 import { gql } from "@apollo/client";
 import context from "./schema/context";
@@ -12,21 +11,12 @@ const cache = new InMemoryCache({
   dataIdFromObject: object => object.id
 });
 
-//@ts-ignore
-const client = new ApolloClient({
+const client: any = new ApolloClient({
   cache,
-  resolvers,
-  typeDefs,
-  //@ts-ignore
   link: new ExtSchemaLink({
     schema,
     context
   })
-});
-
-client.writeQuery({
-  query: gql`{uiState, authStatus}`,
-  data: getInitialData()
 });
 
 export async function graphQLFetch(operation) {
