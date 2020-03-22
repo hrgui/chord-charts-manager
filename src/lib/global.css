@@ -1,0 +1,73 @@
+pre {
+  font-family: "Roboto Mono", monospace;
+  font-size: 14px;
+}
+
+html {
+  width: 100%;
+}
+
+body {
+  width: 100%;
+}
+
+/** TODO move to the ConnectedYoutubeView component */
+
+.youtube-view-hidden {
+  visibility: hidden;
+  height: 0;
+}
+
+.print {
+  display: none;
+}
+
+.printSongBar {
+  margin-bottom: 16px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+@media print {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .printSong {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+  }
+
+  html,
+  body {
+    max-height: 100vh;
+  }
+
+  .song-view-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-height: calc(100vh - 54px);
+  }
+
+  .print {
+    display: inherit;
+  }
+
+  .print-cc-body {
+    margin-bottom: 8px;
+  }
+
+  body,
+  * {
+    color: black !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+}

@@ -1075,7 +1075,7 @@
   dependencies:
     "@firebase/auth-types" "0.10.0"
 
-"@firebase/component@0.1.8":
+"@firebase/component@0.1.8", "@firebase/component@^0.1.8":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@firebase/component/-/component-0.1.8.tgz#3a5753493ba65c85c9c09e2707be44d73e0a456c"
   integrity sha512-kzuCF+NVympQk3gcsHldOmDRVPVndECi6O9Wvd47HTEQYO9HsZWfOM1fHUvvHAijSzNi16p4NSM7UziuBQBL4w==
@@ -1285,6 +1285,11 @@
   integrity sha512-tAag0jEcjwH+P2quUfipd7liWCNX2F8NvYjQp2wtInsZxnMlypdw0FtAOLxtvvkO+GSRRbmNi8m/5y42PQJYCQ==
   dependencies:
     "@hapi/hoek" "^8.3.0"
+
+"@hrgui/chord-charts@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@hrgui/chord-charts/-/chord-charts-1.0.0.tgz#17f175546085e8260ccfe932b4fa4caaa9373790"
+  integrity sha512-IAdghKmtE7HjNATfUJL81Xsf0xbGaiP4X0aDHptgtJtoPswLn5zaLt1vE1y69OIbbNesFKNJoR3KhF9HZDG7Ug==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"

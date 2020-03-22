@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hrgui/chord-charts": "^1.0.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -39,6 +40,7 @@
   "devDependencies": {
     "@apollo/client": "^3.0.0-beta.41",
     "@apollo/react-hooks": "^3.1.3",
+    "@firebase/component": "^0.1.8",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.46",
