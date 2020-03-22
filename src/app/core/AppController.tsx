@@ -9,11 +9,26 @@ import client from "app/graphql/client";
 import { StoreProvider } from "easy-peasy";
 import { configureStore } from "app/store";
 
+interface AppControllerProps {
+  children?;
+  store?;
+  apolloClient?;
+  config?;
+}
+
 export function AppController({
   children,
   store = configureStore(),
-  apolloClient = client
-}) {
+  apolloClient = client,
+  config = null
+}: AppControllerProps) {
+  if (config) {
+    store = configureStore({
+      preloadedState: {
+        uiState: config
+      }
+    });
+  }
   return (
     <StylesProvider injectFirst>
       <StoreProvider store={store}>

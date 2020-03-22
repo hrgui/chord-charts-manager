@@ -4,9 +4,9 @@ import AppController from "./core/AppController";
 import AppLayout from "./core/AppLayout";
 import AppRootRoutes from "./AppRootRoutes";
 
-function App({ children }: { children? }) {
+function App({ children, config }: { children?; config? }) {
   return (
-    <AppController>
+    <AppController config={config}>
       <AppLayout>{children ? children : <AppRootRoutes />}</AppLayout>
     </AppController>
   );

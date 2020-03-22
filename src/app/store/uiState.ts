@@ -1,7 +1,4 @@
 import { action, Action } from "easy-peasy";
-import { getConfig } from "../config";
-
-const config = getConfig();
 
 function getViewportWidth() {
   return window.innerWidth;
@@ -36,9 +33,9 @@ export interface UiStateModel {
 
 const model: UiStateModel = {
   darkMode: !!window.localStorage.getItem("CHORD_CHARTS_DARK_MODE"),
-  appName: config.appName,
+  appName: "",
   page: {
-    title: config.appName,
+    title: "",
     subtitle: null
   },
   widthBreakpoint: null,
@@ -68,7 +65,7 @@ const model: UiStateModel = {
     state.youtubeHidden = !state.youtubeHidden;
   }),
   resetPageInfo: action((state: any) => {
-    state.page.title = config.appName;
+    state.page.title = state.appName;
     state.page.subtitle = null;
   }),
   setStickyState: action((state: any, payload) => {
