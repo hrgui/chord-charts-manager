@@ -14,17 +14,19 @@ interface AppControllerProps {
   store?;
   apolloClient?;
   config?;
+  initialState?;
 }
 
 export function AppController({
   children,
   store = configureStore(),
   apolloClient = client,
+  initialState = null,
   config = null
 }: AppControllerProps) {
-  if (config) {
+  if (config || initialState) {
     store = configureStore({
-      initialState: {
+      initialState: initialState || {
         uiState: config
       }
     });
