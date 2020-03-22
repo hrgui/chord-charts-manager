@@ -24,7 +24,7 @@ export function AppController({
 }: AppControllerProps) {
   if (config) {
     store = configureStore({
-      preloadedState: {
+      initialState: {
         uiState: config
       }
     });

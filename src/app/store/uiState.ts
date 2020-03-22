@@ -1,4 +1,5 @@
 import { action, Action } from "easy-peasy";
+export const CHORD_CHARTS_DARK_MODE_KEY = "CHORD_CHARTS_DARK_MODE";
 
 function getViewportWidth() {
   return window.innerWidth;
@@ -32,7 +33,7 @@ export interface UiStateModel {
 }
 
 const model: UiStateModel = {
-  darkMode: !!window.localStorage.getItem("CHORD_CHARTS_DARK_MODE"),
+  darkMode: false, // see root store for initial state initialization
   appName: "",
   page: {
     title: "",
@@ -47,7 +48,7 @@ const model: UiStateModel = {
   toggleDarkMode: action((state: any) => {
     state.darkMode = !state.darkMode;
     // side effect
-    window.localStorage.setItem("CHORD_CHARTS_DARK_MODE", state.darkMode);
+    window.localStorage.setItem(CHORD_CHARTS_DARK_MODE_KEY, state.darkMode);
   }),
   setWidthBreakpoint: action((state: any, payload) => {
     state.widthBreakpoint = payload;

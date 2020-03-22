@@ -1,26 +1,33 @@
-import { createStore, createTypedHooks } from "easy-peasy";
+import { createStore, createTypedHooks, EasyPeasyConfig } from "easy-peasy";
 import uiState from "./uiState";
 import auth, { AuthModel } from "./auth";
-import { UiStateModel } from "./uiState";
+import { UiStateModel, CHORD_CHARTS_DARK_MODE_KEY } from "./uiState";
 
 export interface RootStoreModel {
   uiState: UiStateModel;
   auth: AuthModel;
 }
 
-export function configureStore({ preloadedState }: { preloadedState? } = {}) {
+export function configureStore(config?: EasyPeasyConfig<any>) {
   let models = {
     uiState,
     auth
   };
 
-  if (preloadedState) {
-    Object.keys(preloadedState).forEach(key => {
-      models[key] = { ...models[key], ...preloadedState[key] };
-    });
+  const initialState = {
+    ...config?.initialState
+  };
+
+  if (!initialState.uiState) {
+    initialState.uiState = {};
   }
 
-  return createStore<RootStoreModel>(models);
+  initialState.uiState = {
+    ...initialState.uiState,
+    darkMode: window.localStorage.getItem(CHORD_CHARTS_DARK_MODE_KEY) === "true"
+  };
+
+  return createStore<RootStoreModel>(models, { ...config, initialState });
 }
 
 const store = configureStore();
