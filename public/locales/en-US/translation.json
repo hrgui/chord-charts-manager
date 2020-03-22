@@ -1,0 +1,17 @@
+{
+  "graphiql": "API / GraphIQL Explorer",
+  "edit": "Edit",
+  "view": "View",
+  "cancel": "Cancel",
+  "save": "Save",
+  "actions": "Actions",
+  "action/dark_theme/on": "Dark theme: On",
+  "action/dark_theme/off": "Dark theme: Off",
+  "form/error/required": "Required",
+  "list/header/updated_date": "Last Edited",
+  "list/header/created_date": "Date Created",
+  "form/error/loading": "An error occurred while loading this field.",
+  "ErrorDisplay/title": "An error occurred",
+  "ErrorDisplay/notAllowed": "You do not have sufficient permissions to view this page",
+  "ErrorDisplay/notAllowedMore": "Check that the IDs are valid and you have permissions to access them."
+}

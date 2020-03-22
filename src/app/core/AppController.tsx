@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { StylesProvider } from "@material-ui/styles";
 import { ApolloProvider } from "@apollo/client";
@@ -8,6 +8,7 @@ import { SnackbarProvider } from "notistack";
 import client from "app/graphql/client";
 import { StoreProvider } from "easy-peasy";
 import { configureStore } from "app/store";
+import PageLoading from "lib/layout/PageLoading";
 
 interface AppControllerProps {
   children?;
@@ -32,19 +33,21 @@ export function AppController({
     });
   }
   return (
-    <StylesProvider injectFirst>
-      <StoreProvider store={store}>
-        <ApolloProvider client={apolloClient}>
-          <HelmetProvider>
-            <Router>
-              <AppThemeProvider>
-                <SnackbarProvider>{children}</SnackbarProvider>
-              </AppThemeProvider>
-            </Router>
-          </HelmetProvider>
-        </ApolloProvider>
-      </StoreProvider>
-    </StylesProvider>
+    <Suspense fallback={<PageLoading />}>
+      <StylesProvider injectFirst>
+        <StoreProvider store={store}>
+          <ApolloProvider client={apolloClient}>
+            <HelmetProvider>
+              <Router>
+                <AppThemeProvider>
+                  <SnackbarProvider>{children}</SnackbarProvider>
+                </AppThemeProvider>
+              </Router>
+            </HelmetProvider>
+          </ApolloProvider>
+        </StoreProvider>
+      </StylesProvider>
+    </Suspense>
   );
 }
 

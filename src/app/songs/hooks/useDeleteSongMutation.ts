@@ -1,6 +1,8 @@
 import { useMutation, gql } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 
 export function useDeleteSongMutation() {
+  const { t } = useTranslation();
   const res = useMutation(
     gql`
       mutation deleteSong($id: ID!) {
@@ -12,7 +14,7 @@ export function useDeleteSongMutation() {
   );
   const oldRes = res[0];
   res[0] = (...params) => {
-    const ok = window.confirm(`Are you sure you want to delete this song?`);
+    const ok = window.confirm(t(`song:action/confirm_delete`));
 
     // unhandled rejection wat
     if (!ok) {
