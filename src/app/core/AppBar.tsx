@@ -2,7 +2,6 @@ import * as React from "react";
 import MuiAppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { createStyles, Theme } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import classnames from "classnames";
@@ -61,7 +60,7 @@ function useIntersection(options) {
     );
     observer.observe(elRef.current as any);
     return () => observer.disconnect();
-  }, [elRef.current]);
+  }, [options]);
   return { observerEntry, elRef };
 }
 const StyledAppBar = styled(MuiAppBar)`
@@ -116,7 +115,7 @@ export const AppBar = (props: NavBarProps) => {
     return () => {
       setStickyState(false);
     };
-  }, [isSingle]);
+  }, [isSingle, setStickyState]);
 
   const leftIcon = (
     <StyledIconButton
@@ -135,7 +134,7 @@ export const AppBar = (props: NavBarProps) => {
         position={"sticky"}
         color="primary"
         className={classnames("print-hidden", {
-          ["AppBar-isTopBar"]: hasDualBar
+          "AppBar-isTopBar": hasDualBar
         })}
       >
         <div ref={elRef} />

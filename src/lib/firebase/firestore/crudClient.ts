@@ -1,4 +1,5 @@
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/firestore";
 
 import { runAsDev, getDbSettings } from "../devApp";
 
@@ -74,7 +75,7 @@ function updateAuthz(data) {
   if (data.share) {
     const readers: String[] = [];
     const editors: String[] = [];
-    Object.keys(data.share).map(id => {
+    Object.keys(data.share).forEach(id => {
       readers.push(id);
 
       if (data.share[id] === "editor") {

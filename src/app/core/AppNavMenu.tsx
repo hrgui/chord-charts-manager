@@ -11,7 +11,7 @@ import ListItemLink from "lib/layout/ListItemLink";
 import Home from "@material-ui/icons/Home";
 import { WithWidth } from "lib/layout/WithWidth";
 import styled from "styled-components";
-import { isUserAdmin, isUserWorkingAs } from "../user/userUtils";
+// import { isUserAdmin, isUserWorkingAs } from "../user/userUtils";
 import { useUserData } from "lib/hooks/useUserData";
 // import AdminMenu from "./admin/AdminMenu";
 // import SongsNavMenu from "../songs/SongsNavMenu";

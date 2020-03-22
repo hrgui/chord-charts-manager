@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useGetAppBarData } from "lib/hooks/useGetAppBarData";
 import { WithWidth } from "lib/layout/WithWidth";
 import { NAV_MENU_WIDTH } from "app/core/AppNavMenu";
-import { useAppBarActions } from "lib/hooks/useAppBarActions";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import { IconButton } from "@material-ui/core";
 import { ToggleControlsPanelAction } from "./ControlsPanel";
@@ -37,7 +36,6 @@ export const ControlsBarRightPanel = styled.div`
 
 export const ControlsBar = () => {
   const config = useGetAppBarData();
-  const { toggleControlsPanel } = useAppBarActions();
 
   if (!config) {
     return null;

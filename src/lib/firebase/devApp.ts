@@ -1,6 +1,6 @@
 import * as util from "@firebase/util";
-import * as firebase from "firebase";
-import { Component, ComponentType } from '@firebase/component';
+import * as firebase from "firebase/app";
+import { Component } from '@firebase/component';
 
 export const DEV_USER = {
   uid: "2k91lnHF0QZZq2DKi42REFTrtYo2",
