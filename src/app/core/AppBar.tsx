@@ -22,8 +22,8 @@ interface NavBarProps {
   navMenuHidden?: boolean;
   title?: string;
   subtitle?: string;
-  onShowNavMenu?: () => any;
-  onHideNavMenu?: () => any;
+  onShowNavMenu?: any;
+  onHideNavMenu?: any;
   rightPanel?: any;
   userPanel?: any;
   state?: string;
