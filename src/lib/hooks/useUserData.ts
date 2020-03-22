@@ -1,10 +1,5 @@
-import { useQuery } from "@apollo/client";
-import { GET_CURRENT_AUTH_STATUS } from "lib/auth/queries";
+import { useStoreState } from "app/store";
 
 export function useUserData(): any {
-  const { data = { status: { currentUser: null } } } = useQuery(
-    GET_CURRENT_AUTH_STATUS
-  );
-  const { currentUser } = data.status;
-  return currentUser || {};
+  return useStoreState(state => state.auth.user);  
 }

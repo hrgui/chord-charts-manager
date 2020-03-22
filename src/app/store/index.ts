@@ -25,11 +25,11 @@ export function configureStore({ preloadedState }: { preloadedState? } = {}) {
 
 const store = configureStore();
 
-const { useStoreActions, useStore, useStoreDispatch } = createTypedHooks<
+const { useStoreActions, useStore, useStoreDispatch, useStoreState } = createTypedHooks<
   RootStoreModel
 >();
 
-export { useStoreActions, useStoreDispatch, useStore };
+export { useStoreActions, useStoreDispatch, useStore, useStoreState };
 
 if (process.env.NODE_ENV !== "production") {
   (window as any).store = store;

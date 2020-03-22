@@ -1,16 +1,6 @@
-import { useMutation } from "@apollo/client";
-import gql from "graphql-tag";
+import { useAppBarActions } from "./useAppBarActions";
 
 export function useGlobalSongActions() {
-  const [toggleYoutube] = useMutation(
-    gql`
-      mutation {
-        toggleYoutube @client
-      }
-    `
-  );
-
-  return {
-    toggleYoutube
-  };
+  const { toggleYoutube } = useAppBarActions();
+  return { toggleYoutube };
 }

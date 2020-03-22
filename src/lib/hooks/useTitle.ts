@@ -1,31 +1,19 @@
-import { useMutation } from "@apollo/client";
-import gql from "graphql-tag";
 import { useEffect } from "react";
+import { useStoreActions } from "app/store";
 
-export function useTitle(title, subtitle?) {
-  const [setPageInfo] = useMutation(
-    gql`
-      mutation setPageInfo($title: String, $subtitle: String) {
-        setPageInfo(title: $title, subtitle: $subtitle) @client
-      }
-    `
-  );
-
-  const [resetPageInfo] = useMutation(
-    gql`
-      mutation resetPageInfo {
-        resetPageInfo @client
-      }
-    `
-  );
+export function useTitle(title: string, subtitle?: string) {
+  const {
+    setPageInfo,
+    resetPageInfo
+  } = useStoreActions(actions => actions.uiState);
 
   useEffect(() => {
     if (title) {
-      setPageInfo({ variables: { title } });
+      setPageInfo({title});
     }
 
     if (subtitle !== undefined) {
-      setPageInfo({ variables: { subtitle } });
+      setPageInfo({ subtitle });
     }
 
     return () => {

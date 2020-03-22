@@ -1,7 +1,7 @@
 import { useStoreState } from "app/store";
 
-export function useGetAppBarData() {
+export function useUiState() {
   return useStoreState(state => state.uiState);
 }
 
-export default useGetAppBarData;
+export default useUiState;

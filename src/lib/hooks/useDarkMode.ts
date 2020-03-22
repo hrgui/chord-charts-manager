@@ -1,16 +1,5 @@
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useStoreState } from "app/store";
 
 export function useDarkMode() {
-  const { data, loading, error} = useQuery(
-    gql`
-      {
-        uiState @client {
-          darkMode
-        }
-      }
-    `
-  );
-
-  return data && data.uiState.darkMode;
+  return useStoreState(state => state.uiState.darkMode);
 }
