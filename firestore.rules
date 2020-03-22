@@ -1,0 +1,86 @@
+service cloud.firestore {
+   match /databases/{database}/documents {
+
+    match /song/{id} {
+      allow list: if signedIn() && canListResource();
+      allow create: if signedIn() && hasGroup();
+      allow read: if signedIn() && canReadResource();
+      allow update: if signedIn() && canEditResource();
+      allow delete: if signedIn() && userIsAdmin();
+    }
+
+    match /setlist/{id} {
+      allow list: if signedIn() && canListResource();
+      allow create: if signedIn() && hasGroup();
+      allow read: if signedIn() && canReadResource();
+      allow update: if signedIn() && canEditResource();
+      allow delete: if signedIn() && userIsAdmin();
+    }
+
+    match /user/{id} {
+      allow list: if signedIn() && (userIsAdmin() || resourceIsUser());
+      allow create: if signedIn() && hasGroup();
+      allow read: if signedIn() && (userIsAdmin() || resourceIsUser());
+      allow update: if signedIn() && (userIsAdmin() || resourceIsUser());
+      allow delete: if signedIn() && (userIsAdmin());
+    }
+
+    match /group/{id} {
+      allow list: if signedIn();
+      allow create: if signedIn() && userIsAdmin();
+      allow read: if signedIn() && (userIsAdmin() || userOwnsResource()); // TODO: user is in group
+      allow update: if signedIn() && (userIsAdmin() || userOwnsResource());
+      allow delete: if signedIn() && userIsAdmin();
+    }
+
+    function hasGroup() {
+      return request.auth.token.currentGroupId != null;
+    }
+
+    function signedIn() {
+      return request.auth.uid != null;
+    }
+
+    function canListResource() {
+      return userIsAdmin() || userCanReadResource() || groupCanReadResource() || userOwnsResource();
+    }
+
+    function canReadResource() {
+      return userIsAdmin() || groupCanReadResource() || userOwnsResource() || userCanReadResource();
+    }
+
+    function canEditResource() {
+      return userIsAdmin() || groupCanEditResource() || userOwnsResource() || userCanEditResource();
+    }
+
+    function resourceIsUser() {
+      return resource.data.uid == request.auth.uid;
+    }
+
+    function userOwnsResource() {
+      return resource.data.owner_uid == request.auth.uid;
+    }
+
+    function userCanReadResource() {
+      // return userCanEditResource() || resource.data.share[request.auth.uid] == "reader";
+      return request.auth.uid in resource.data.authz.readers;
+    }
+
+    function userCanEditResource() {
+      return resource.data.share[request.auth.uid] == "editor";
+    }
+
+    function groupCanReadResource() {
+      return request.auth.token.currentGroupId in resource.data.authz.readers;
+    }
+
+    function groupCanEditResource() {
+      return resource.data.share[request.auth.token.currentGroupId] == "editor";
+    }
+
+    function userIsAdmin() {
+      return request.auth.token.role == "admin";
+    }
+
+  }
+}
