@@ -4,13 +4,12 @@ import { ListItem } from "@material-ui/core";
 import { useDarkMode } from "lib/hooks/useDarkMode";
 import { useStoreActions } from "app/store";
 
-
 interface IDarkThemeActionProps {}
 
-const DarkThemeAction: React.FunctionComponent<
-  IDarkThemeActionProps
-> = props => {
-  const toggleDarkMode = useStoreActions(actions => actions.uiState.toggleDarkMode);
+const DarkThemeAction: React.FunctionComponent<IDarkThemeActionProps> = () => {
+  const toggleDarkMode = useStoreActions(
+    actions => actions.uiState.toggleDarkMode
+  );
   const isDarkMode = useDarkMode();
 
   return (

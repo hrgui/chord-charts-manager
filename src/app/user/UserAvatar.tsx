@@ -9,7 +9,6 @@ interface UserAvatarProps {
   onClick?;
 }
 
-
 export function UserAvatar({
   className,
   photoURL,

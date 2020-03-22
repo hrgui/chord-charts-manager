@@ -36,17 +36,15 @@ const auth: AuthModel = {
   setCurrentGroup: action((state: any, payload: string) => {
     state.user.currentGroupId = payload;
   }),
-  isAuthenticated: thunk(
-    async (actions: any, payload, { getState }) => {
-      const currentUser = (getState() as any).user;
-      if (currentUser) {
-        return currentUser;
-      }
-      const user = await isAuthenticated();
-      actions.setUser(user);
-      return user;
+  isAuthenticated: thunk(async (actions: any, payload, { getState }) => {
+    const currentUser = (getState() as any).user;
+    if (currentUser) {
+      return currentUser;
     }
-  )
+    const user = await isAuthenticated();
+    actions.setUser(user);
+    return user;
+  })
 };
 
 export default auth;

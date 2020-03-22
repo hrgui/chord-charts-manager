@@ -8,7 +8,7 @@ export const Menu = props => {
     <MuiMenu
       getContentAnchorEl={null}
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      transformOrigin={{ vertical: "top", horizontal: "center"}}
+      transformOrigin={{ vertical: "top", horizontal: "center" }}
       {...props}
     />
   );

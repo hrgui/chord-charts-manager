@@ -1,6 +1,6 @@
 import * as util from "@firebase/util";
 import * as firebase from "firebase/app";
-import { Component } from '@firebase/component';
+import { Component } from "@firebase/component";
 
 export const DEV_USER = {
   uid: "2k91lnHF0QZZq2DKi42REFTrtYo2",
@@ -55,10 +55,7 @@ export function runAsDev() {
     "PRIVATE"
   );
 
-  (app as any)._addOrOverwriteComponent(
-    mockAuthComponent
-  );
-
+  (app as any)._addOrOverwriteComponent(mockAuthComponent);
 
   return app;
 }

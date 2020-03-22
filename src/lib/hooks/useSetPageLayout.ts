@@ -14,7 +14,7 @@ export function useSetPageLayout(page, deps) {
     return () => {
       setNavBarState("main");
     };
-  }, deps);
+  }, [page, setNavBarState]);
 
   return [loading];
 }

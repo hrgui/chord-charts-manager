@@ -106,12 +106,12 @@ export function AppNavMenu(props: NavMenuProps) {
             variant={variant}
             classes={{
               paper: classnames("drawerPaper", {
-                "drawerPaperHidden": navMenuHidden
+                drawerPaperHidden: navMenuHidden
               })
             }}
             ModalProps={{ keepMounted: true }}
             className={classnames("print-hidden", {
-              "drawerHidden": navMenuHidden
+              drawerHidden: navMenuHidden
             })}
           >
             <NavMenuTitle>{config.appName}</NavMenuTitle>

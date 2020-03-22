@@ -25,9 +25,12 @@ export function configureStore({ preloadedState }: { preloadedState? } = {}) {
 
 const store = configureStore();
 
-const { useStoreActions, useStore, useStoreDispatch, useStoreState } = createTypedHooks<
-  RootStoreModel
->();
+const {
+  useStoreActions,
+  useStore,
+  useStoreDispatch,
+  useStoreState
+} = createTypedHooks<RootStoreModel>();
 
 export { useStoreActions, useStoreDispatch, useStore, useStoreState };
 
