@@ -1,9 +1,8 @@
 import React from "react";
 import { NativeSelect } from "@material-ui/core";
 import styled from "styled-components";
-import { useMutation } from "@apollo/client";
 import { useUserData } from "lib/hooks/useUserData";
-import { SET_CURRENT_GROUP } from "lib/auth/queries";
+import useAuthActions from "lib/hooks/useAuthActions";
 
 const StyledNativeSelect = styled(NativeSelect)`
   margin-right: ${({ theme }) => theme.spacing()}px;
@@ -30,7 +29,7 @@ export const GroupSelector = (props: any) => {
 
 export const ConnectedUserGroupSelector = ({ className }: { className? }) => {
   const user = useUserData();
-  const [setCurrentGroup] = useMutation(SET_CURRENT_GROUP);
+  const { setCurrentGroup } = useAuthActions();
 
   if (!user) {
     return null;
@@ -40,9 +39,7 @@ export const ConnectedUserGroupSelector = ({ className }: { className? }) => {
     <GroupSelector
       className={className}
       value={user.currentGroupId}
-      onChange={value =>
-        setCurrentGroup({ variables: { currentGroupId: value } })
-      }
+      onChange={value => setCurrentGroup(value)}
       groups={user.groups}
     />
   );

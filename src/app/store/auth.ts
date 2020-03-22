@@ -10,7 +10,7 @@ export interface AuthModel {
   user?: any;
   setUser: Action<any, any>;
   isAuthenticated: Thunk<any>;
-  setCurrentGroup: Action<any, any>;
+  setCurrentGroup: Action<any, string>;
   logout: Thunk<any, any>;
   setCurrentGroupInSession: Thunk<any, any>;
 }
@@ -33,7 +33,7 @@ const auth: AuthModel = {
     // something to refresh everything; window.location.reload for the time being is MVPish
     window.location.reload();
   }),
-  setCurrentGroup: action((state: any, payload) => {
+  setCurrentGroup: action((state: any, payload: string) => {
     state.user.currentGroupId = payload;
   }),
   isAuthenticated: thunk(

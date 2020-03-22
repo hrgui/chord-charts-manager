@@ -1,22 +1,16 @@
 import React from "react";
 import { ListItemText } from "@material-ui/core";
 import { ListItem } from "@material-ui/core";
-import { useMutation } from "@apollo/client";
 import { useDarkMode } from "lib/hooks/useDarkMode";
-import gql from "graphql-tag";
+import { useStoreActions } from "app/store";
+
 
 interface IDarkThemeActionProps {}
 
 const DarkThemeAction: React.FunctionComponent<
   IDarkThemeActionProps
 > = props => {
-  const [toggleDarkMode] = useMutation(
-    gql`
-      mutation {
-        toggleDarkMode @client
-      }
-    `
-  );
+  const toggleDarkMode = useStoreActions(actions => actions.uiState.toggleDarkMode);
   const isDarkMode = useDarkMode();
 
   return (
