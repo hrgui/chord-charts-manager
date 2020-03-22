@@ -9,7 +9,7 @@ import { action, thunk, Action, Thunk } from "easy-peasy";
 export interface AuthModel {
   user?: any;
   setUser: Action<any, any>;
-  onCheckAuthenticated: Thunk<any>;
+  isAuthenticated: Thunk<any>;
   setCurrentGroup: Action<any, any>;
   logout: Thunk<any, any>;
   setCurrentGroupInSession: Thunk<any, any>;
@@ -36,7 +36,7 @@ const auth: AuthModel = {
   setCurrentGroup: action((state: any, payload) => {
     state.user.currentGroupId = payload;
   }),
-  onCheckAuthenticated: thunk(
+  isAuthenticated: thunk(
     async (actions: any, payload, { getState }) => {
       const currentUser = (getState() as any).user;
       if (currentUser) {

@@ -1,19 +1,13 @@
-import { useQuery } from "@apollo/client";
-import { gql } from "@apollo/client";
+import { useAsync } from "react-async";
+import { useStoreActions } from "app/store";
 
 export function useIsAuthenticated(): [boolean, boolean, any] {
-  const { data, loading } = useQuery(gql`
-    query CheckOnlineStatus {
-      status: getCurrentAuthStatus @client {
-        currentUser
-        isAuthenticated
-      }
-    }
-  `);
+  const isAuthenticatedFn = useStoreActions(actions => actions.auth.isAuthenticated);
+  const {isLoading, data} = useAsync<any>(isAuthenticatedFn)
 
   return [
-    loading,
-    data && data.status.isAuthenticated,
-    data && data.status.currentUser
+    isLoading,
+    !isLoading && !!data,
+    !isLoading && data
   ];
 }
