@@ -3,8 +3,11 @@ import ReactDOM from "react-dom";
 import App from "app/App";
 import * as serviceWorker from "./serviceWorker";
 import "./i18n";
+import { AppConfig } from "lib/appConfig";
+import initializeFirebaseApp from "lib/firebase";
 
-export function bootstrap(appConfig) {
+export function bootstrap(appConfig: AppConfig) {
+  initializeFirebaseApp(appConfig.firebase);
   ReactDOM.render(
     <React.StrictMode>
       <App config={appConfig} />

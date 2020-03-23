@@ -5,6 +5,11 @@
   "cancel": "Cancel",
   "save": "Save",
   "actions": "Actions",
+  "action/login": "Login",
+  "action/logout": "Logout",
+  "user/logged_in_as": "Logged in as {{userDisplayName}}",
+  "user/work_as": "Working as {{userDisplayName}}",
+  "user/my_profile": "My Profile",
   "action/dark_theme/on": "Dark theme: On",
   "action/dark_theme/off": "Dark theme: Off",
   "form/error/required": "Required",
@@ -13,5 +18,9 @@
   "form/error/loading": "An error occurred while loading this field.",
   "ErrorDisplay/title": "An error occurred",
   "ErrorDisplay/notAllowed": "You do not have sufficient permissions to view this page",
-  "ErrorDisplay/notAllowedMore": "Check that the IDs are valid and you have permissions to access them."
+  "ErrorDisplay/notAllowedMore": "Check that the IDs are valid and you have permissions to access them.",
+  "newUser/sign_up_plz": "Please sign up for a group before proceeding",
+  "logout/error": "Unable to logout - error occurred. Please clear your cookies to log out manually.",
+  "logout/success": "You have been succesfully logged out",
+  "logout/click_here": "Click here if the page does not reload you, or close the window"
 }

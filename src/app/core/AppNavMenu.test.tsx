@@ -9,6 +9,7 @@ it("should at least have the Dark theme switch and the name of the app", () => {
   });
   const el = getByText(/Dark theme/);
   expect(el).toBeInTheDocument();
+  expect(getByText(/Login/)).toBeInTheDocument();
   const el2 = getByText(APP_NAME);
   expect(el2).toBeInTheDocument();
 });

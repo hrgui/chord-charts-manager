@@ -1,3 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ListItemLink - default state 1`] = `<span />`;
+exports[`ListItemLink - default state 1`] = `
+<a
+  aria-disabled="false"
+  class="MuiButtonBase-root MuiListItem-root sc-AxjAm jcYXsi MuiListItem-gutters MuiListItem-button"
+  href="/test"
+  role="button"
+  tabindex="0"
+>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</a>
+`;

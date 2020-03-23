@@ -34,3 +34,25 @@ test("should at least render with a menu item which can toggle the menu state", 
   fireEvent.click(el);
   expect(getByText("nav_menu_off")).toBeInTheDocument();
 });
+
+test("should render the user if it is present, it should bring up a menu when clicked", () => {
+  const { getByText } = render(
+    <>
+      <AppBar />
+      <TestMenuStateDisplay />
+    </>,
+    {
+      initialState: {
+        auth: {
+          user: {
+            displayName: "Zara"
+          }
+        }
+      }
+    }
+  );
+  const el = getByText("Z");
+  expect(el).toBeInTheDocument();
+  fireEvent.click(el);
+  expect(getByText(/Logged in as/)).toBeInTheDocument();
+});

@@ -4,11 +4,15 @@ import { Divider, ListItemText, ListSubheader, List } from "@material-ui/core";
 import { useUserData } from "lib/hooks/useUserData";
 import { getWorkAsUser } from "./userUtils";
 import OtherSettingsNavMenu from "./OtherSettingsMenu";
+import { useTranslation } from "react-i18next";
 
 export function WorkAsMenuList({ workAsUser }) {
+  const { t } = useTranslation();
   return (
     <List>
-      <ListSubheader>Working as {workAsUser.displayName}</ListSubheader>
+      <ListSubheader>
+        {t(`user/work_as`, { userDisplayName: workAsUser.displayName })}
+      </ListSubheader>
     </List>
   );
 }
@@ -22,16 +26,20 @@ export function UserMenuList({
   workAsUser?;
   onItemClick?;
 }) {
+  const { t } = useTranslation();
+
   return (
     <List>
-      <ListSubheader>Logged in as {userDisplayName}</ListSubheader>
+      <ListSubheader>
+        {t("user/logged_in_as", { userDisplayName })}
+      </ListSubheader>
       {workAsUser && <WorkAsMenuList workAsUser={workAsUser} />}
       <ListItemLink onClick={onItemClick} to="/my-profile">
-        <ListItemText primary={"My Profile"} />
+        <ListItemText primary={t(`user/my_profile`)} />
       </ListItemLink>
       <Divider />
       <ListItemLink onClick={onItemClick} to="/logout">
-        <ListItemText primary={"Logout"} />
+        <ListItemText primary={t(`action/logout`)} />
       </ListItemLink>
     </List>
   );

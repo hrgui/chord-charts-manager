@@ -9,7 +9,7 @@ import WidthListener from "lib/layout/WidthListener";
 import ControlsPanel from "app/controls/ControlsPanel";
 import { ControlsBar } from "app/controls/ControlsBar";
 
-const AppContainer = styled.a`
+const AppContainer = styled.div`
   display: flex;
 `;
 

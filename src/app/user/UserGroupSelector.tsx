@@ -5,7 +5,7 @@ import { useUserData } from "lib/hooks/useUserData";
 import useAuthActions from "lib/hooks/useAuthActions";
 
 const StyledNativeSelect = styled(NativeSelect)`
-  margin-right: ${({ theme }) => theme.spacing()}px;
+  margin-right: ${({ theme }) => theme.spacing(1)}px;
 `;
 
 export const GroupSelector = (props: any) => {

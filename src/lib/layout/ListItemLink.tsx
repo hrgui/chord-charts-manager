@@ -10,17 +10,8 @@ const StyledListItem = styled(ListItem).attrs({ activeClassName })`
   }
 `;
 
-const MemoNavLink = React.forwardRef<any, any>((props, ref) => {
-  return (
-    <>
-      <span ref={ref}></span>
-      <ReactRouterNavLink {...props} />
-    </>
-  );
-});
-
-const ListItemLink = ({ ...props }: any) => {
-  return <StyledListItem button component={MemoNavLink} exact {...props} />;
-};
+const ListItemLink = ({ ...props }: any) => (
+  <StyledListItem button component={ReactRouterNavLink} exact {...props} />
+);
 
 export default ListItemLink;

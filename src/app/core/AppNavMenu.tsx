@@ -16,7 +16,7 @@ import { useUserData } from "lib/hooks/useUserData";
 // import AdminMenu from "./admin/AdminMenu";
 // import SongsNavMenu from "../songs/SongsNavMenu";
 // import SetlistsNavMenu from "../setlists/SetlistsNavMenu";
-// import LoginMenuList from "./LoginMenu";
+import LoginMenuList from "app/session/LoginMenuList";
 import OtherSettingsNavMenu from "app/user/OtherSettingsMenu";
 import { useAppBarActions } from "lib/hooks/useAppBarActions";
 import { useGetAppBarData } from "lib/hooks/useGetAppBarData";
@@ -120,7 +120,7 @@ export function AppNavMenu(props: NavMenuProps) {
               <NavMenuItems user={user} />
             ) : (
               <>
-                {/* <LoginMenuList /> */}
+                <LoginMenuList />
                 <Divider />
                 <OtherSettingsNavMenu />
               </>
