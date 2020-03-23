@@ -1,15 +1,20 @@
 import React from "react";
 import { render, act } from "@testing-library/react";
 import { AppController } from "app/core/AppController";
+import createApolloClientWithMocks from "./createApolloClientWithMocks";
 
 export function renderWithAppController(
   ui,
-  { store, ...appControllerProps }: any = {}
+  { store, gqlContext, ...appControllerProps }: any = {}
 ) {
   let el;
   act(() => {
     el = render(
-      <AppController store={store} {...appControllerProps}>
+      <AppController
+        store={store}
+        apolloClient={createApolloClientWithMocks(gqlContext)}
+        {...appControllerProps}
+      >
         {ui}
       </AppController>
     );

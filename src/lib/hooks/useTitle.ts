@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useStoreActions } from "app/store";
 
-export function useTitle(title: string, subtitle?: string) {
+export function useTitle(title: string, subtitle?: string | null) {
   const { setPageInfo, resetPageInfo } = useStoreActions(
     actions => actions.uiState
   );
