@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useTable, useFilters, useSortBy } from "react-table";
 import MuiTable from "@material-ui/core/Table";
+import TableContainer from "@material-ui/core/TableContainer";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
@@ -93,26 +94,25 @@ function UnstyledTable({
 
   // Render the UI for your table
   return (
-    <MuiTable
-      size={"small"}
-      classes={{
-        root: className,
-        stickyHeader: classnames({ pageTableStickyHeader: isPageTable })
-      }}
-      stickyHeader={isPageTable}
-      {...getTableProps()}
-    >
-      <TableHead>
-        {headerGroups.map(headerGroup => (
-          <TableRow {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <TableCell
-                className="tableHeaderCell"
-                {...column.getHeaderProps(column.getSortByToggleProps())}
-              >
-                <div className="sortableHeaderContainer">
-                  <span>{column.render("Header")}</span>
-                  <span>
+    <TableContainer className={className}>
+      <MuiTable
+        size={"small"}
+        classes={{
+          stickyHeader: classnames({ pageTableStickyHeader: isPageTable })
+        }}
+        stickyHeader={isPageTable}
+        {...getTableProps()}
+      >
+        <TableHead>
+          {headerGroups.map(headerGroup => (
+            <TableRow {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <TableCell
+                  className="tableHeaderCell"
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                >
+                  <div className="sortableHeaderContainer">
+                    <div>{column.render("Header")}</div>
                     {column.canSort && (
                       <div className={"sortingSwitch"}>
                         <div
@@ -121,7 +121,7 @@ function UnstyledTable({
                             sortingTickerInactive: column.isSortedDesc
                           })}
                         >
-                          <ArrowDropUpIcon />
+                          <ArrowDropUpIcon fontSize="small" />
                         </div>
                         <div
                           className={classnames("sortingTicker", {
@@ -129,69 +129,70 @@ function UnstyledTable({
                             sortingTickerInactive: column.isSortedDesc === false
                           })}
                         >
-                          <ArrowDropDownIcon />
+                          <ArrowDropDownIcon fontSize="small" />
                         </div>
                       </div>
                     )}
-                  </span>
+                  </div>
+                  <div>{column.canFilter ? column.render("Filter") : null}</div>
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableHead>
+        <TableBody>
+          {rows.map(
+            (row, i) =>
+              prepareRow(row) || (
+                <TableRow {...row.getRowProps()}>
+                  {row.cells.map(cell => {
+                    return (
+                      <TableCell size="small" {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              )
+          )}
+          {!isLoading && rows.length === 0 && !error && (
+            <TableRow>
+              <TableCell colSpan={columns?.length}>
+                <div className={"emptyMessage"}>
+                  <h1 className="emptyHeader">{emptyHeader}</h1>
+                  <h2 className="emptyAction">{emptyAction}</h2>
                 </div>
-                <div>{column.canFilter ? column.render("Filter") : null}</div>
               </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableHead>
-      <TableBody>
-        {rows.map(
-          (row, i) =>
-            prepareRow(row) || (
-              <TableRow {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return (
-                    <TableCell size="small" {...cell.getCellProps()}>
-                      {cell.render("Cell")}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            )
-        )}
-        {!isLoading && rows.length === 0 && !error && (
-          <TableRow>
-            <TableCell colSpan={columns?.length}>
-              <div className={"emptyMessage"}>
-                <h1 className="emptyHeader">{emptyHeader}</h1>
-                <h2 className="emptyAction">{emptyAction}</h2>
-              </div>
-            </TableCell>
-          </TableRow>
-        )}
-        {isLoading && (
-          <TableRow>
-            <TableCell colSpan={columns?.length}>
-              <LinearProgress color="secondary" />
-            </TableCell>
-          </TableRow>
-        )}
-        {error && (
-          <TableRow>
-            <TableCell colSpan={columns?.length}>
-              <div className="emptyMessage">
-                <h1 className="emptyHeader">{errorText}</h1>
-              </div>
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody>
-    </MuiTable>
+            </TableRow>
+          )}
+          {isLoading && (
+            <TableRow>
+              <TableCell colSpan={columns?.length}>
+                <LinearProgress color="secondary" />
+              </TableCell>
+            </TableRow>
+          )}
+          {error && (
+            <TableRow>
+              <TableCell colSpan={columns?.length}>
+                <div className="emptyMessage">
+                  <h1 className="emptyHeader">{errorText}</h1>
+                </div>
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </MuiTable>
+    </TableContainer>
   );
 }
 
 export const Table: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
-  &.pageTableStickyHeader .MuiTableCell-stickyHeader {
-    top: 48px;
-  }
+  max-height: calc(100vh - 48px);
 
+  & td {
+    white-space: nowrap;
+  }
   .emptyMessage {
     text-align: center;
   }
@@ -206,17 +207,14 @@ export const Table: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
 
   .sortableHeaderContainer {
     display: flex;
-    align-items: end;
+    line-height: 26px;
   }
 
   .sortingTicker {
+    margin-left: ${({ theme }: { theme: Theme }) => theme.spacing(1)}px;
     height: 6px;
     color: ${({ theme }: { theme: Theme }) =>
       fade(theme.palette.text.primary, 0.5)};
-
-    &:hover {
-      ${({ theme }: { theme: Theme }) => fade(theme.palette.text.primary, 1)};
-    }
   }
 
   .sortingTickerInactive {

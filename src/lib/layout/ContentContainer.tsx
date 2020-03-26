@@ -1,5 +1,4 @@
 import * as React from "react";
-import { ToolbarSpacer } from "./ToolbarSpacer";
 import styled from "styled-components";
 
 export interface ContentContainerProps {
@@ -15,12 +14,7 @@ const StyledContentContainer = styled.div`
 
 export function ContentContainer(props: ContentContainerProps) {
   const { children } = props;
-  return (
-    <StyledContentContainer>
-      {children}
-      <ToolbarSpacer single force />
-    </StyledContentContainer>
-  );
+  return <StyledContentContainer>{children}</StyledContentContainer>;
 }
 
 export default ContentContainer;
