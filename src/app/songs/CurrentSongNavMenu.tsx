@@ -18,6 +18,7 @@ import { useGlobalSongSettings } from "lib/hooks/useGlobalSongSettings";
 import { useGlobalSongActions } from "lib/hooks/useGlobalSongActions";
 import { useAppBarActions } from "lib/hooks/useAppBarActions";
 import useDeleteSongMutation from "./hooks/useDeleteSongMutation";
+import { useTranslation } from "react-i18next";
 
 export function CurrentSongNavMenuPlaceholder() {
   return <div id="currentSongNavMenu" />;
@@ -32,15 +33,17 @@ export function SongSectionsNavMenu({
   sectionsSettings?;
   onSetSectionSettings?;
 }) {
+  const { t } = useTranslation();
+
   if (!sections) {
     return null;
   }
 
   return (
     <List dense>
-      <ListSubheader>View Song Controls</ListSubheader>
+      <ListSubheader>{t("song:navMenu/title")}</ListSubheader>
       {sections.map((section, i) => {
-        const title = section.title || `Untitled Section id: ${i + 1}`;
+        const title = section.title || `${t("song:untitledSection")}: ${i + 1}`;
         const sectionSettings = (sectionsSettings && sectionsSettings[i]) || {};
 
         return (
@@ -76,6 +79,7 @@ export interface CurrentSongNavMenuProps {
 }
 
 export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
+  const { t } = useTranslation();
   const user = useUserData() || {};
   const isAdmin = isUserAdmin(user);
   const [deleteSong] = useDeleteSongMutation();
@@ -102,7 +106,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
         <ListItemIcon>
           <Edit />
         </ListItemIcon>
-        <ListItemText primary={"Edit"} />
+        <ListItemText primary={t("edit")} />
       </ListItemLink>
       {isAdmin && (
         <ListItem
@@ -121,7 +125,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
-          <ListItemText primary={"Delete"} />
+          <ListItemText primary={t("delete")} />
         </ListItem>
       )}
       <Divider />
@@ -135,7 +139,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
           {!isVideoHidden ? <ToggleOn /> : <ToggleOff />}
         </ListItemIcon>
         <ListItemText
-          primary={`Video: ${!isVideoHidden ? "Show" : "Hidden"}`}
+          primary={`${t("video")}: ${!isVideoHidden ? t("on") : t("off")}`}
         />
       </ListItem>
       <ListItem
@@ -147,7 +151,9 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
         <ListItemIcon>
           {!lyricsDisabled ? <ToggleOn /> : <ToggleOff />}
         </ListItemIcon>
-        <ListItemText primary={`Lyrics: ${!lyricsDisabled ? "On" : "Off"}`} />
+        <ListItemText
+          primary={`${t("lyrics")}: ${!lyricsDisabled ? t("on") : t("off")}`}
+        />
       </ListItem>
       <ListItem
         button
@@ -158,7 +164,9 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
         <ListItemIcon>
           {!chordsDisabled ? <ToggleOn /> : <ToggleOff />}
         </ListItemIcon>
-        <ListItemText primary={`Chords: ${!chordsDisabled ? "On" : "Off"}`} />
+        <ListItemText
+          primary={`${t("chords")}: ${!chordsDisabled ? t("on") : t("off")}`}
+        />
       </ListItem>
       <SongSectionsNavMenu
         sectionsSettings={sectionsSettings}

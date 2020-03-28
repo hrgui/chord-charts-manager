@@ -1,5 +1,7 @@
 {
   "action/confirm_delete": "Are you sure you want to delete this song?",
   "list/emptyAction": "<0>Create a new song</0> and it'll show up here.",
-  "list/emptyHeader": "Empty in songs."
+  "list/emptyHeader": "Empty in songs.",
+  "navMenu/title": "View Song Controls",
+  "untitledSection": "Untitled Section id"
 }
