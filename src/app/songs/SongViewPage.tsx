@@ -38,6 +38,7 @@ export const SongViewContainer: React.SFC<SongViewContainerProps> = props => {
     settings,
     onChangeSettings = () => null
   } = props;
+  useTitle(`View Song: ${isLoading ? props.id : data?.song.title}`);
 
   if (isInSetlist && !isActiveInSetlist) {
     return null;
