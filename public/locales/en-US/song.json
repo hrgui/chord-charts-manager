@@ -3,5 +3,13 @@
   "list/emptyAction": "<0>Create a new song</0> and it'll show up here.",
   "list/emptyHeader": "Empty in songs.",
   "navMenu/title": "View Song Controls",
-  "untitledSection": "Untitled Section id"
+  "untitledSection": "Untitled Section id",
+  "label/title": "Title",
+  "label/artist": "Artist",
+  "label/key": "Key",
+  "label/youtube": "Youtube URL",
+  "label/tags": "Tags",
+  "label/sections": "Sections",
+  "message/saveSuccess": "Song {{song}} has been saved",
+  "message/saveError": "Song could not be saved. Please check for any errors and try again."
 }

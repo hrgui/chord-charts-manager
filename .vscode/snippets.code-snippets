@@ -34,7 +34,7 @@
   },
   "renderWithAppController": {
     "scope": "javascript,typescript,typescriptreact",
-    "prefix": "trac",
+    "prefix": "irac",
     "body": [
       "import { renderWithAppController as render } from \"testUtils/renderWithAppController\";"
     ],
