@@ -1,6 +1,6 @@
 import React from "react";
 import { Drawer, IconButton } from "@material-ui/core";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { CurrentSetlistNavMenuPlaceholder } from "../setlists/CurrentSetlistNavMenu";
 import { CurrentSongNavMenuPlaceholder } from "../songs/CurrentSongNavMenu";
 import classnames from "classnames";
@@ -69,7 +69,7 @@ export const ControlsPanel = () => {
             classes={{
               paper: classnames("drawerPaper", `controlsPanel-${variant}`, {
                 // TODO: this used to be !open
-                "drawerPaperHidden": !controlsPanelHidden
+                drawerPaperHidden: controlsPanelHidden
               })
             }}
             anchor="right"

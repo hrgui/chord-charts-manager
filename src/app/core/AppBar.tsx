@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import classnames from "classnames";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { UserAvatar } from "../user/UserAvatar";
 import ConnectedUserGroupSelector from "../user/UserGroupSelector";
 import UserMenu from "../user/UserMenu";

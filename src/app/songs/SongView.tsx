@@ -8,7 +8,7 @@ import ReactDOM from "react-dom";
 import { AppBarTitle, AppBarSubtitle } from "app/core/AppBar";
 import { getOrCreateElement } from "lib/layout/portalSelector";
 import { CurrentSongNavMenu } from "./CurrentSongNavMenu";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 interface SongViewProps {
   isLoading?: boolean;

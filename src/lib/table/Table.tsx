@@ -6,7 +6,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import classnames from "classnames";
 import TextField from "@material-ui/core/TextField";
 import { LinearProgress, InputAdornment, fade, Theme } from "@material-ui/core";

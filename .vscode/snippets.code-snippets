@@ -23,7 +23,7 @@
   "styled-components": {
     "scope": "javascript,typescript,typescriptreact",
     "prefix": "ims",
-    "body": ["import styled from \"styled-components\""],
+    "body": ["import styled from \"styled-components/macro\""],
     "description": "Import styled components"
   },
   "styled-components theme": {

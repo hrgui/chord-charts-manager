@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import Head from "./Head";
 import { CssBaseline } from "@material-ui/core";
 import AppNavMenu from "./AppNavMenu";

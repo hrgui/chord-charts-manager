@@ -1,7 +1,7 @@
 import * as React from "react";
 import { AppBar as MuiAppBar, Toolbar } from "@material-ui/core";
 import classnames from "classnames";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { useGetAppBarData } from "lib/hooks/useGetAppBarData";
 import { WithWidth } from "lib/layout/WithWidth";
 import { NAV_MENU_WIDTH } from "app/core/AppNavMenu";

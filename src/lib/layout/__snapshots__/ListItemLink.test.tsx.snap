@@ -3,7 +3,7 @@
 exports[`ListItemLink - default state 1`] = `
 <a
   aria-disabled="false"
-  class="MuiButtonBase-root MuiListItem-root sc-AxjAm jcYXsi MuiListItem-gutters MuiListItem-button"
+  class="MuiButtonBase-root MuiListItem-root ListItemLink__StyledListItem-mwnnrf-0 kexruV MuiListItem-gutters MuiListItem-button"
   href="/test"
   role="button"
   tabindex="0"

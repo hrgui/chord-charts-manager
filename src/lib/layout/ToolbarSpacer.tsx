@@ -1,6 +1,6 @@
 import * as React from "react";
 import { WithWidth } from "./WithWidth";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { useGetAppBarData } from "../hooks/useGetAppBarData";
 
 export interface ToolbarSpacerProps {

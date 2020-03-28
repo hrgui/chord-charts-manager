@@ -2,7 +2,7 @@ import React from "react";
 import { useAsync } from "react-async";
 import { Loading } from "lib/layout/Loading";
 import { Typography, Button } from "@material-ui/core";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import useAuthActions from "lib/hooks/useAuthActions";
 import { useTranslation } from "react-i18next";
 

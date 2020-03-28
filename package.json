@@ -46,6 +46,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.46",
     "abcjs": "^5.12.0",
+    "babel-plugin-macros": "^2.8.0",
     "firebase": "^7.12.0",
     "formik": "^2.1.4",
     "fuse.js": "^5.0.7-beta",

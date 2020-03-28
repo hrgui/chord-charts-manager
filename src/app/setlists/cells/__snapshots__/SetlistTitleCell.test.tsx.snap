@@ -3,7 +3,7 @@
 exports[`renders setlist Title given a setlist 1`] = `
 <div>
   <a
-    class="MuiTypography-root MuiLink-root MuiLink-underlineHover sc-AxjAm jngDRX MuiTypography-colorPrimary"
+    class="MuiTypography-root MuiLink-root MuiLink-underlineHover Link__StyledLink-sc-1d5spp1-0 iAwma-d MuiTypography-colorPrimary"
     href="/setlist/undefined"
   >
     Donald Duck Setlist

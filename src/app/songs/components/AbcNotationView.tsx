@@ -1,7 +1,7 @@
 import * as React from "react";
 import abcjs from "abcjs/midi";
 import "abcjs/abcjs-midi.css";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 function colorRange(range, color) {
   if (range && range.elements) {

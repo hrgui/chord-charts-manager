@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "lib/layout/Link";
 import { toDomDate } from "lib/utils/date";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 interface MobileSetlistTitleCellProps {
   value?: string;

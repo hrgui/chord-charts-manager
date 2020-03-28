@@ -1,7 +1,7 @@
 import * as React from "react";
 import { NavLink as ReactRouterNavLink } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const activeClassName = `ListItemLink-active`;
 const StyledListItem = styled(ListItem).attrs({ activeClassName })`

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import MuiLink from "@material-ui/core/Link";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 const StyledLink = styled(MuiLink)`
   color: ${({ theme }) =>

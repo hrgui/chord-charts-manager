@@ -3,7 +3,7 @@ import ChordChartView from "./ChordChartView";
 import { AbcNotationView } from "./AbcNotationView";
 import Close from "@material-ui/icons/Close";
 import classnames from "classnames";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 interface SongSectionViewProps {
   chordsDisabled?: boolean;

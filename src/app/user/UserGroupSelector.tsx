@@ -1,6 +1,6 @@
 import React from "react";
 import { NativeSelect } from "@material-ui/core";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { useUserData } from "lib/hooks/useUserData";
 import useAuthActions from "lib/hooks/useAuthActions";
 

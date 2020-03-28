@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ReactChordChart } from "@hrgui/chord-charts-react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 interface ChordChartViewProps {
   value?: string;
