@@ -34,11 +34,6 @@ export function Form<
   );
 
   return (
-    <Formik
-      enableReinitialize={true}
-      initialValues={props.initialValues || {}}
-      {...props}
-      onSubmit={handleSubmit}
-    />
+    <Formik enableReinitialize={true} {...props} onSubmit={handleSubmit} />
   );
 }

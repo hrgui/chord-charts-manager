@@ -97,63 +97,70 @@ export const SongForm = (props: SongFormProps) => {
           onSubmitSuccess={props.onSubmitSuccess}
           onSubmitError={props.onSubmitError}
         >
-          {({ values, handleSubmit }) => (
+          {({ values, submitForm, isSubmitting }) => (
             <>
-              <Container>
-                <ShareBarField name="share" />
-                <SongFormCard
-                  className={classnames({
-                    "SongFormCard-mobile": !(width === "lg" || width === "xl")
-                  })}
-                >
-                  <TitleAndArtistFieldSet>
-                    <TextField
-                      fullWidth
-                      label={t("song:label/title")}
-                      name="title"
-                    />
-                    <ArtistTextField
-                      label={t("song:label/artist")}
-                      name="artist"
-                    />
-                  </TitleAndArtistFieldSet>
-                  <ChordSelectFieldSet>
-                    <ChordSelectField label={t("song:label/key")} name="key" />
-                  </ChordSelectFieldSet>
-                  <StyledConnectedYoutubeView
+              <form>
+                <Container>
+                  <ShareBarField name="share" />
+                  <SongFormCard
                     className={classnames({
-                      "ConnectedYoutubeView-tablet": width === "md",
-                      "ConnectedYoutubeView-mobile":
-                        width === "sm" || width === "xs",
-                      "ConnectedYoutubeView-breakout": !(
-                        width === "lg" || width === "xl"
-                      )
+                      "SongFormCard-mobile": !(width === "lg" || width === "xl")
                     })}
-                    value={values.youtube}
-                  />
-                </SongFormCard>
-                <TextField
-                  fullWidth
-                  label={t("song:label/youtube")}
-                  name="youtube"
-                />
-                <ChipInputField
-                  fullWidth
-                  label={t("song:label/tags")}
-                  name="tags"
-                />
-                <SongSectionsField name="sections" sections={values.sections} />
-                <FormActions>
-                  <Button
-                    onClick={e => {
-                      //@ts-ignore
-                      return handleSubmit(e);
-                    }}
                   >
-                    {t("save")}
-                  </Button>
-                </FormActions>
-              </Container>
+                    <TitleAndArtistFieldSet>
+                      <TextField
+                        fullWidth
+                        label={t("song:label/title")}
+                        name="title"
+                      />
+                      <ArtistTextField
+                        label={t("song:label/artist")}
+                        name="artist"
+                      />
+                    </TitleAndArtistFieldSet>
+                    <ChordSelectFieldSet>
+                      <ChordSelectField
+                        label={t("song:label/key")}
+                        name="key"
+                      />
+                    </ChordSelectFieldSet>
+                    <StyledConnectedYoutubeView
+                      className={classnames({
+                        "ConnectedYoutubeView-tablet": width === "md",
+                        "ConnectedYoutubeView-mobile":
+                          width === "sm" || width === "xs",
+                        "ConnectedYoutubeView-breakout": !(
+                          width === "lg" || width === "xl"
+                        )
+                      })}
+                      value={values.youtube}
+                    />
+                  </SongFormCard>
+                  <TextField
+                    fullWidth
+                    label={t("song:label/youtube")}
+                    name="youtube"
+                  />
+                  <ChipInputField
+                    fullWidth
+                    label={t("song:label/tags")}
+                    name="tags"
+                  />
+                  <SongSectionsField
+                    name="sections"
+                    sections={values.sections}
+                  />
+                  <FormActions>
+                    <Button
+                      type="submit"
+                      onClick={submitForm}
+                      disabled={isSubmitting}
+                    >
+                      {t("save")}
+                    </Button>
+                  </FormActions>
+                </Container>
+              </form>
             </>
           )}
         </Form>
