@@ -2,22 +2,7 @@
   "name": "@hrgui/chord-charts-manager",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@hrgui/chord-charts": "^1.0.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "easy-peasy": "^3.3.0",
-    "material-ui-chip-input": "^2.0.0-beta.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
-  },
+  "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -40,12 +25,28 @@
     ]
   },
   "devDependencies": {
+    "@hrgui/chord-charts": "^1.0.0",
+    "@types/react-router-dom": "^5.1.3",
+    "easy-peasy": "^3.3.0",
+    "material-ui-chip-input": "^2.0.0-beta.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "typescript": "~3.7.2",
     "@apollo/client": "^3.0.0-beta.41",
     "@apollo/react-hooks": "^3.1.3",
     "@firebase/component": "^0.1.8",
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.46",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@types/yup": "^0.26.33",
     "abcjs": "^5.12.0",
     "babel-plugin-macros": "^2.8.0",
     "firebase": "^7.12.0",
@@ -70,6 +71,7 @@
     "react-table": "^7.0.0",
     "react-youtube": "^7.9.0",
     "sanitize-filename": "^1.6.3",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "yup": "^0.28.3"
   }
 }
