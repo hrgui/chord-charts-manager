@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepareInputForMutation 1`] = `
+Object {
+  "name": "Test",
+  "sections": Array [
+    Object {
+      "name": "test",
+    },
+  ],
+}
+`;

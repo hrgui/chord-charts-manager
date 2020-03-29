@@ -3,10 +3,11 @@ import { FieldArray } from "formik";
 import Button from "@material-ui/core/Button";
 import { SongSectionField } from "./SongSectionField";
 
-export function SongSectionsField({ name, sections }) {
+export function SongSectionsField({ name, ...otherProps }) {
   return (
-    <FieldArray name={name}>
-      {({ move, remove, push }) => {
+    <FieldArray name={name} {...otherProps}>
+      {({ move, remove, push, form }) => {
+        const sections = form.values[name];
         return (
           <>
             <Button onClick={e => push({ body: " " })}>

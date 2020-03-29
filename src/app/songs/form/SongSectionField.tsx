@@ -25,13 +25,17 @@ export const SongSectionFieldPanel: React.SFC<SongSectionFieldPanelProps> = ({
 }) => {
   return (
     <div>
-      <IconButton onClick={onMoveDown} disabled={isDownDisabled}>
+      <IconButton
+        onClick={onMoveDown}
+        disabled={isDownDisabled}
+        data-testid="down"
+      >
         <ArrowDownward />
       </IconButton>
-      <IconButton onClick={onMoveUp} disabled={isUpDisabled}>
+      <IconButton onClick={onMoveUp} disabled={isUpDisabled} data-testid="up">
         <ArrowUpward />
       </IconButton>
-      <Button onClick={onDelete}>
+      <Button onClick={onDelete} data-testid="delete">
         <Delete />
       </Button>
     </div>

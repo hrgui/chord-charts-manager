@@ -12,6 +12,8 @@ import FormActions from "lib/form/FormActions";
 import ShareBarField from "app/share/ShareBarField";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 interface SongSection {
   title?: string;
@@ -81,10 +83,21 @@ const StyledConnectedYoutubeView = styled(ConnectedYoutubeView)`
 `;
 
 export const SongForm = (props: SongFormProps) => {
-  const { data, isLoading } = props;
+  const { data, error, isLoading } = props;
   const { t } = useTranslation();
 
+  const validationSchema = Yup.object({
+    title: Yup.string().required(),
+    artist: Yup.string().required(),
+    key: Yup.string().required()
+  });
+
   if (isLoading) {
+    return null;
+  }
+
+  if (error) {
+    console.error(error);
     return null;
   }
 
@@ -92,12 +105,13 @@ export const SongForm = (props: SongFormProps) => {
     <WithWidth>
       {({ width }) => (
         <Form
+          validationSchema={validationSchema}
           initialValues={data}
           onSubmit={props.onSubmit}
           onSubmitSuccess={props.onSubmitSuccess}
           onSubmitError={props.onSubmitError}
         >
-          {({ values, submitForm, isSubmitting }) => (
+          {({ values, errors, submitForm, isSubmitting }) => (
             <>
               <form>
                 <Container>
@@ -110,16 +124,22 @@ export const SongForm = (props: SongFormProps) => {
                     <TitleAndArtistFieldSet>
                       <TextField
                         fullWidth
+                        error={errors.title}
+                        helperText={<ErrorMessage name="title" />}
                         label={t("song:label/title")}
                         name="title"
                       />
                       <ArtistTextField
+                        error={errors.artist}
+                        helperText={<ErrorMessage name="artist" />}
                         label={t("song:label/artist")}
                         name="artist"
                       />
                     </TitleAndArtistFieldSet>
                     <ChordSelectFieldSet>
                       <ChordSelectField
+                        error={errors.key}
+                        helperText={<ErrorMessage name="key" />}
                         label={t("song:label/key")}
                         name="key"
                       />
@@ -146,10 +166,7 @@ export const SongForm = (props: SongFormProps) => {
                     label={t("song:label/tags")}
                     name="tags"
                   />
-                  <SongSectionsField
-                    name="sections"
-                    sections={values.sections}
-                  />
+                  <SongSectionsField name="sections" />
                   <FormActions>
                     <Button
                       type="submit"
@@ -168,3 +185,5 @@ export const SongForm = (props: SongFormProps) => {
     </WithWidth>
   );
 };
+
+export default SongForm;

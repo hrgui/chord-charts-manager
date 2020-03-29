@@ -6,6 +6,7 @@ import { useUserData } from "lib/hooks/useUserData";
 import { useMutation, gql, useQuery } from "@apollo/client";
 import SongFragment from "../SongFragment";
 import { useTranslation } from "react-i18next";
+import { useParams, useHistory } from "react-router-dom";
 
 export interface SongFormPageProps {
   path?: string;
@@ -15,6 +16,7 @@ export interface SongFormPageProps {
 }
 
 const SongEditPage: React.SFC<SongFormPageProps> = props => {
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const [updateSong] = useMutation(gql`
     mutation update($data: SongInput!, $id: ID!) {
@@ -53,16 +55,16 @@ const SongEditPage: React.SFC<SongFormPageProps> = props => {
         })
       }
       onSubmitSuccess={(res, values) => {
-        enqueueSnackbar(`Song ${values.title || values.id} has been saved.`, {
-          variant: "success"
-        });
+        enqueueSnackbar(
+          t(`song:message/saveSuccess`, { song: values.title || values.id }),
+          {
+            variant: "success"
+          }
+        );
         props.navigate(`/song/${props.id}/view`);
       }}
       onSubmitError={e => {
-        enqueueSnackbar(
-          `Song could not be saved. Please check for any errors and try again.`,
-          { variant: "error" }
-        );
+        enqueueSnackbar(t(`song:message/saveError`), { variant: "error" });
         enqueueSnackbar(<pre>{JSON.stringify(e, null, 2)}</pre>, {
           variant: "error"
         });
@@ -74,7 +76,7 @@ const SongEditPage: React.SFC<SongFormPageProps> = props => {
   );
 };
 
-function getNewSongTemplate(currentGroupId) {
+export function getNewSongTemplate(currentGroupId) {
   return {
     title: `Untitled Song ${new Date().toString()}`,
     key: "C",
@@ -138,14 +140,16 @@ const SongNewPage: React.SFC<SongFormPageProps> = props => {
 };
 
 export default props => {
+  const { id } = useParams();
+  const history = useHistory();
   const user = useUserData() || {};
-  const SongFormPage = props.match.params.id ? SongEditPage : SongNewPage;
+  const SongFormPage = id ? SongEditPage : SongNewPage;
 
   return (
     <SongFormPage
       currentGroupId={user.currentGroupId}
-      navigate={props.history.push}
-      id={props.match.params.id}
+      navigate={history.push}
+      id={id}
       {...props}
     />
   );

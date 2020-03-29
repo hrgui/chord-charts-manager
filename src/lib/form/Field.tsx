@@ -13,10 +13,9 @@ export const Field: React.SFC<FieldProps> = props => {
 
   if (component && !props.render) {
     render = props => {
-      const { field, form } = props;
+      const { field } = props;
       const c = React.createElement(component, {
         ...field,
-        form,
         defaultValue:
           otherProps.defaultValue || (!field.value ? "" : undefined),
         children,
