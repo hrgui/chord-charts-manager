@@ -142,11 +142,7 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
           marginBottom: 16
         }}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={e => setDialogOpen(!isDialogOpen)}
-        >
+        <Button variant="outlined" onClick={e => setDialogOpen(!isDialogOpen)}>
           Share
         </Button>
       </div>

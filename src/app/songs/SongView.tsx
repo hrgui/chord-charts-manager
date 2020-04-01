@@ -9,6 +9,7 @@ import { AppBarTitle, AppBarSubtitle } from "app/core/AppBar";
 import { getOrCreateElement } from "lib/layout/portalSelector";
 import { CurrentSongNavMenu } from "./CurrentSongNavMenu";
 import styled from "styled-components/macro";
+import { ToolbarSpacer } from "lib/layout/ToolbarSpacer";
 
 interface SongViewProps {
   isLoading?: boolean;
@@ -257,6 +258,7 @@ const SongView = (props: SongViewProps) => {
                 sections={data.sections}
                 sectionsSettings={sectionsSettings}
               />
+              <ToolbarSpacer />
             </Container>
             {wrappedYoutubeViewCpt}
           </StyledWrapper>

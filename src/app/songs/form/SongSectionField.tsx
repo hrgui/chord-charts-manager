@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ArrowDownward from "@material-ui/icons/ArrowDownward";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import Delete from "@material-ui/icons/Delete";
+import { useTranslation } from "react-i18next";
 
 interface SongSectionFieldPanelProps {
   onMoveDown?: () => any;
@@ -56,9 +57,14 @@ export const SongSectionField: React.SFC<SongSectionFieldProps> = ({
   isUpDisabled,
   onDelete
 }) => {
+  const { t } = useTranslation();
   return (
-    <div>
-      <TextField fullWidth label="Section Title" name={`${name}.title`} />
+    <>
+      <TextField
+        fullWidth
+        label={t("song:label/section/title")}
+        name={`${name}.title`}
+      />
       <SongSectionFieldPanel
         onMoveDown={onMoveDown}
         onMoveUp={onMoveUp}
@@ -67,11 +73,18 @@ export const SongSectionField: React.SFC<SongSectionFieldProps> = ({
         onDelete={onDelete}
       />
       {type !== "abc" && (
-        <ChordChartTextField label="Body" name={`${name}.body`} />
+        <ChordChartTextField
+          label={t("song:label/section/body")}
+          name={`${name}.body`}
+        />
       )}
       {type === "abc" && (
-        <AbcTextField fullWidth label="Body" name={`${name}.body`} />
+        <AbcTextField
+          fullWidth
+          label={t("song:label/section/body")}
+          name={`${name}.body`}
+        />
       )}
-    </div>
+    </>
   );
 };

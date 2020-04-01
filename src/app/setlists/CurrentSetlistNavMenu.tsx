@@ -61,7 +61,7 @@ export function SetlistNavigation({ id, songs, settings, onChangeSettings }) {
         const fetchedSong = fetchedSongs && fetchedSongs[idx];
 
         return (
-          <ListItemLink to={`/setlist/${id}/${hidx}`}>
+          <ListItemLink to={`/setlist/${id}/${hidx}`} key={hidx}>
             {loading && !fetchedSong ? (
               <Skeleton width={Math.floor(Math.random() * 426)} height={16} />
             ) : (

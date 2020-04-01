@@ -7,6 +7,7 @@ import SongsListPage from "app/songs/SongsListPage";
 import SetlistsListPage from "app/setlists/SetlistsListPage";
 import SongViewPage from "app/songs/SongViewPage";
 import SongFormPage from "app/songs/form/SongFormPage";
+import SetlistViewPage from "app/setlists/SetlistViewPage";
 
 export function AppRootRoutes() {
   return (
@@ -16,9 +17,16 @@ export function AppRootRoutes() {
 
       <ProtectedRoute component={SongsListPage} path="/songs" exact />
       <ProtectedRoute component={SongViewPage} path="/song/:id/view" exact />
-      <ProtectedRoute component={SetlistsListPage} path="/setlists" exact />
       <ProtectedRoute exact component={SongFormPage} path="/song/new" />
       <ProtectedRoute exact component={SongFormPage} path="/song/:id/edit" />
+
+      <ProtectedRoute component={SetlistsListPage} path="/setlists" exact />
+      <ProtectedRoute
+        component={SetlistViewPage}
+        path="/setlist/:id/:songIndex?"
+        exact
+      />
+
       <Redirect from="/" to="/songs" />
     </Switch>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Paper, makeStyles, Theme } from "@material-ui/core";
 import { Form } from "lib/form/Form";
 import { ChipInputField } from "lib/form/ChipInputField";
 import { TextField } from "lib/form/TextField";
@@ -42,7 +42,7 @@ const Container = styled.div`
   padding: ${({ theme }) => theme.spacing(2)}px;
 `;
 
-const SongFormCard = styled.div`
+const SongFormCard = styled(Paper)`
   display: flex;
   width: 100%;
 
@@ -62,6 +62,7 @@ const ArtistTextField = styled(TextField)`
 
 const ChordSelectFieldSet = styled.div`
   margin-left: auto;
+  padding-right: ${({ theme }) => theme.spacing(1)}px;
 `;
 
 const StyledConnectedYoutubeView = styled(ConnectedYoutubeView)`
@@ -82,9 +83,24 @@ const StyledConnectedYoutubeView = styled(ConnectedYoutubeView)`
   }
 `;
 
+const useStyles = makeStyles((theme: Theme) => ({
+  field: {
+    marginBottom: theme.spacing(1)
+  },
+  card: {
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  cardFirst: {
+    padding: theme.spacing(2),
+    paddingBottom: 0
+  }
+}));
+
 export const SongForm = (props: SongFormProps) => {
   const { data, error, isLoading } = props;
   const { t } = useTranslation();
+  const classes = useStyles(props);
 
   const validationSchema = Yup.object({
     title: Yup.string().required(),
@@ -117,12 +133,13 @@ export const SongForm = (props: SongFormProps) => {
                 <Container>
                   <ShareBarField name="share" />
                   <SongFormCard
-                    className={classnames({
+                    className={classnames(classes.cardFirst, {
                       "SongFormCard-mobile": !(width === "lg" || width === "xl")
                     })}
                   >
                     <TitleAndArtistFieldSet>
                       <TextField
+                        className={classes.field}
                         fullWidth
                         error={errors.title}
                         helperText={<ErrorMessage name="title" />}
@@ -156,19 +173,24 @@ export const SongForm = (props: SongFormProps) => {
                       value={values.youtube}
                     />
                   </SongFormCard>
-                  <TextField
-                    fullWidth
-                    label={t("song:label/youtube")}
-                    name="youtube"
-                  />
-                  <ChipInputField
-                    fullWidth
-                    label={t("song:label/tags")}
-                    name="tags"
-                  />
+                  <Paper className={classes.card}>
+                    <TextField
+                      className={classes.field}
+                      fullWidth
+                      label={t("song:label/youtube")}
+                      name="youtube"
+                    />
+                    <ChipInputField
+                      fullWidth
+                      label={t("song:label/tags")}
+                      name="tags"
+                    />
+                  </Paper>
                   <SongSectionsField name="sections" />
                   <FormActions>
                     <Button
+                      variant="contained"
+                      color="primary"
                       type="submit"
                       onClick={submitForm}
                       disabled={isSubmitting}

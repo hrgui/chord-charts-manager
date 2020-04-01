@@ -11,5 +11,7 @@
   "label/tags": "Tags",
   "label/sections": "Sections",
   "message/saveSuccess": "Song {{song}} has been saved",
-  "message/saveError": "Song could not be saved. Please check for any errors and try again."
+  "message/saveError": "Song could not be saved. Please check for any errors and try again.",
+  "label/section/title": "Section Title",
+  "label/section/body": "Body"
 }
