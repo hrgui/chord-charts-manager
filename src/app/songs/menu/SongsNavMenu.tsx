@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 export function SongsNavMenu() {
   const { t } = useTranslation();
   return (
-    <List>
+    <List dense>
       <ListSubheader>{t("song:plural")}</ListSubheader>
       <ListItemLink to="/song/new">
         <ListItemIcon>

@@ -27,7 +27,7 @@ export interface NavMenuProps {
 
 export function HomeNavMenu() {
   return (
-    <List>
+    <List dense>
       <ListItemLink to="/">
         <ListItemIcon>
           <Home />

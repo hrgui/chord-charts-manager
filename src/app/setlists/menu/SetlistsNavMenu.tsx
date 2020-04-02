@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 export function SetlistsNavMenu() {
   const { t } = useTranslation();
   return (
-    <List>
+    <List dense>
       <ListSubheader>{t("setlist:plural")}</ListSubheader>
       <ListItemLink to="/setlist/new">
         <ListItemIcon>

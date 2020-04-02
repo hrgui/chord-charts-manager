@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 export function LoginMenuList() {
   const { t } = useTranslation();
   return (
-    <List>
+    <List dense>
       <ListItemLink to="/login">
         <ListItemText primary={t("action/login")} />
       </ListItemLink>
