@@ -18,6 +18,7 @@ import { Skeleton } from "@material-ui/lab";
 import ChordSelect from "app/songs/components/ChordSelect";
 import UntrackedSettings from "@material-ui/icons/CallMerge";
 import useDeleteSetlistMutation from "./hooks/useDeleteSetlistMutation";
+import { useTranslation } from "react-i18next";
 
 export function CurrentSetlistNavMenuPlaceholder() {
   return <div id="currentSetlistNavMenu" />;
@@ -33,6 +34,7 @@ export interface CurrentSetlistNavMenuProps {
 }
 
 export function SetlistNavigation({ id, songs, settings, onChangeSettings }) {
+  const { t } = useTranslation();
   const { data, loading } = useQuery(
     gql`
       query getSetlistSongs($id: ID) {
@@ -54,7 +56,7 @@ export function SetlistNavigation({ id, songs, settings, onChangeSettings }) {
 
   return (
     <List>
-      <ListSubheader>Setlist Navigation</ListSubheader>
+      <ListSubheader>{t("setlist:menu/navigation/title")}</ListSubheader>
       {songs.map((song, idx) => {
         const hidx = idx + 1;
         const sid = song;
@@ -93,6 +95,7 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
     onSaveSetlistSettings,
     hasUnsavedSettings
   } = props;
+  const { t } = useTranslation();
   const { id, songs = [] } = props.setlist;
   const user = useUserData();
   const [deleteSetlist] = useDeleteSetlistMutation();
@@ -102,13 +105,13 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
     <List dense>
       <ListSubheader>{title}</ListSubheader>
       <Divider />
-      <ListSubheader>Setlist Controls</ListSubheader>
+      <ListSubheader>{t("setlist:menu/controls/title")}</ListSubheader>
       {hasUnsavedSettings && (
         <ListItem button onClick={e => onSaveSetlistSettings(settings)}>
           <ListItemIcon>
             <UntrackedSettings />
           </ListItemIcon>
-          Save Changes
+          {t("save_changes")}
         </ListItem>
       )}
       <ListItemLink to={`/setlist/${id}/edit`}>
@@ -135,7 +138,7 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
-          <ListItemText primary={"Delete"} />
+          <ListItemText primary={"delete"} />
         </ListItem>
       )}
       <Divider />

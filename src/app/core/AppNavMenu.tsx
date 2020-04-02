@@ -14,8 +14,8 @@ import styled from "styled-components/macro";
 // import { isUserAdmin, isUserWorkingAs } from "../user/userUtils";
 import { useUserData } from "lib/hooks/useUserData";
 // import AdminMenu from "./admin/AdminMenu";
-// import SongsNavMenu from "../songs/SongsNavMenu";
-// import SetlistsNavMenu from "../setlists/SetlistsNavMenu";
+import SongsNavMenu from "app/songs/menu/SongsNavMenu";
+import SetlistsNavMenu from "app/setlists/menu/SetlistsNavMenu";
 import LoginMenuList from "app/session/LoginMenuList";
 import OtherSettingsNavMenu from "app/user/OtherSettingsMenu";
 import { useAppBarActions } from "lib/hooks/useAppBarActions";
@@ -60,9 +60,9 @@ export function NavMenuItems({ user }) {
       <HomeNavMenu />
       <Divider />
       <Divider />
-      {/* <SongsNavMenu /> */}
+      <SongsNavMenu />
       <Divider />
-      {/* <SetlistsNavMenu /> */}
+      <SetlistsNavMenu />
       <Divider />
       {/* {isUserAdmin(user) && !isUserWorkingAs(user) && <AdminMenu />} */}
     </>

@@ -1,5 +1,11 @@
 {
+  "single": "Setlist",
+  "plural": "Setlists",
+  "action/new_setlist": "New Setlist",
+  "action/list_setlist": "All Setlists",
   "action/confirm_delete": "Are you sure you want to delete this setlist?",
   "list/emptyAction": "<0>Create a new setlist</0> and it'll show up here.",
-  "list/emptyHeader": "Empty in setlists."
+  "list/emptyHeader": "Empty in setlists.",
+  "menu/navigation/title": "Setlist Navigation",
+  "menu/controls/title": "Setlist Controls"
 }

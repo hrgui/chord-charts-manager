@@ -10,7 +10,7 @@ test("case when theres sections is null/undefined, should still have buttons to 
     onSubmit: () => null
   });
 
-  const el = getByText(/Add Text Chord Chart/);
+  const el = getByText(/Text Chord Chart/);
   expect(el).toBeInTheDocument();
   act(() => {
     fireEvent.click(el);
@@ -41,6 +41,6 @@ test("case when theres sections is populated", () => {
     }
   );
 
-  expect(getByText(/Add Text Chord Chart/)).toBeInTheDocument();
+  expect(getByText(/Text Chord Chart/)).toBeInTheDocument();
   expect(getAllByText(/Section Title/).length).toEqual(2);
 });

@@ -43,9 +43,8 @@ export function SongSectionsField({ name, ...otherProps }) {
             </Paper>
             {sections &&
               sections.map((section, i) => (
-                <Paper className={classes.songSection}>
+                <Paper className={classes.songSection} key={i}>
                   <SongSectionField
-                    key={i}
                     type={section.type}
                     onMoveDown={() => move(i, i + 1)}
                     onMoveUp={() => move(i, i - 1)}
