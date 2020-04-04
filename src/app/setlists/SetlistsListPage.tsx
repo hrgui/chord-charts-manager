@@ -82,15 +82,18 @@ export function LeaderColumnDef() {
 
 const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
   const { t } = useTranslation();
-  const { error, loading, data } = useQuery(gql`
-    {
-      setlists {
-        ...Setlist
+  const { error, loading, data } = useQuery(
+    gql`
+      query getSetlists {
+        setlists {
+          ...Setlist
+        }
       }
-    }
 
-    ${SetlistFragment}
-  `);
+      ${SetlistFragment}
+    `,
+    { fetchPolicy: "cache-and-network" }
+  );
   useTitle("All Setlists", null);
 
   return (
@@ -116,6 +119,9 @@ const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
                 show up here.
               </Trans>
             }
+            initialState={{
+              sortBy: [{ id: "date", desc: true }]
+            }}
             isLoading={loading}
             isPageTable
             columns={columns}

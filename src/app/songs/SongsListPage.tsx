@@ -6,6 +6,7 @@ import { useQuery, gql } from "@apollo/client";
 import SongFragment from "./SongFragment";
 import { Trans } from "react-i18next";
 import { useTranslation } from "react-i18next";
+import SongActions from "./SongActions";
 
 interface SongsListPageProps {
   path?: string;
@@ -64,20 +65,31 @@ const SongsListPage: React.SFC<SongsListPageProps> = () => {
           Cell: ({
             cell: {
               value,
-              row: { original: data }
-            }
+              row: { original: data },
+            },
           }) => {
             return <SongTitleCell value={value} data={data} />;
-          }
+          },
         },
         {
           accessor: "artist",
-          Header: "Artist"
+          Header: "Artist",
         },
         {
           accessor: "key",
-          Header: "Key"
-        }
+          Header: "Key",
+        },
+        {
+          Header: "Actions",
+          id: "actions",
+          Cell: ({
+            cell: {
+              row: { original: data },
+            },
+          }) => {
+            return <SongActions song={data} />;
+          },
+        },
       ]}
       isLoading={loading}
       isPageTable

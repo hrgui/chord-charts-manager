@@ -1,6 +1,21 @@
 import { useMutation, gql } from "@apollo/client";
 import SetlistFragment from "../SetlistFragment";
 
+export function useCreateSetlistMutation() {
+  return useMutation<any, { data? }>(
+    gql`
+      mutation create($data: SetlistInput!) {
+        setlist: createSetlist(record: $data) {
+          ...Setlist
+        }
+      }
+
+      ${SetlistFragment}
+    `,
+    { refetchQueries: ["getSetlists"] }
+  );
+}
+
 export function useSaveSetlistMutation(id) {
   return useMutation<any, { id; data? }>(
     gql`
@@ -12,6 +27,6 @@ export function useSaveSetlistMutation(id) {
 
       ${SetlistFragment}
     `,
-    { variables: { id } }
+    { variables: { id }, refetchQueries: ["getSetlists"] }
   );
 }

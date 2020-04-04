@@ -8,28 +8,28 @@ import Pageview from "@material-ui/icons/Pageview";
 import { isUserAdmin } from "../user/userUtils";
 import { ListItem, ListItemIcon } from "@material-ui/core";
 import { useUserData } from "lib/hooks/useUserData";
-import useDeleteSetlistMutation from "./hooks/useDeleteSetlistMutation";
+import useDeleteSongMutation from "./hooks/useDeleteSongMutation";
 import { useTranslation } from "react-i18next";
 
-interface SetlistActionsProps {
-  setlist?: any;
+interface SongActionsProps {
+  song?: any;
 }
 
-function SetlistActionsList({ id }) {
+function SongActionsList({ id }) {
   const user = useUserData();
-  const [deleteSetlist] = useDeleteSetlistMutation();
+  const [deleteSetlist] = useDeleteSongMutation();
   const isAdmin = isUserAdmin(user);
   const { t } = useTranslation();
 
   return (
     <List dense disablePadding>
-      <ListItemLink to={`/setlist/${id}`}>
+      <ListItemLink to={`/song/${id}/view`}>
         <ListItemIcon>
           <Pageview />
         </ListItemIcon>
         <ListItemText primary={t("view")} />
       </ListItemLink>
-      <ListItemLink to={`/setlist/${id}/edit`}>
+      <ListItemLink to={`/song/${id}/edit`}>
         <ListItemIcon>
           <Edit />
         </ListItemIcon>
@@ -47,7 +47,7 @@ function SetlistActionsList({ id }) {
               return;
             }
 
-            window.location.href = "/setlists";
+            window.location.href = "/songs";
           }}
         >
           <ListItemIcon>
@@ -60,12 +60,12 @@ function SetlistActionsList({ id }) {
   );
 }
 
-const SetlistActions: React.SFC<SetlistActionsProps> = (props) => {
+const SongActions: React.SFC<SongActionsProps> = (props) => {
   return (
     <ActionsMenu>
-      <SetlistActionsList id={props.setlist.id} />
+      <SongActionsList id={props.song.id} />
     </ActionsMenu>
   );
 };
 
-export default SetlistActions;
+export default SongActions;

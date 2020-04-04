@@ -8,7 +8,7 @@ interface SetlistActionsProps {
   id?: any;
 }
 
-const ActionsMenu: React.SFC<SetlistActionsProps> = props => {
+const ActionsMenu: React.SFC<SetlistActionsProps> = (props) => {
   const { id = "actions-menu", children } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -22,11 +22,12 @@ const ActionsMenu: React.SFC<SetlistActionsProps> = props => {
   return (
     <>
       <IconButton
+        size="small"
         aria-owns={anchorEl ? id : undefined}
         aria-haspopup="true"
         onClick={handleClick}
       >
-        <MoreVert />
+        <MoreVert fontSize="small" />
       </IconButton>
       <Menu
         id={id}

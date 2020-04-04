@@ -42,6 +42,7 @@ export interface TableProps {
   isPageTable?;
   emptyHeader?;
   emptyAction?;
+  initialState?;
 }
 
 function UnstyledTable({
@@ -53,7 +54,8 @@ function UnstyledTable({
   isPageTable = false,
   emptyHeader = "There's nothing here.",
   emptyAction = "Create a new thing and it will show up here.",
-  errorText = "An error occurred"
+  errorText = "An error occurred",
+  initialState
 }) {
   const filterTypes = React.useMemo(
     () => ({
@@ -86,7 +88,8 @@ function UnstyledTable({
       columns,
       data: data || [],
       filterTypes,
-      defaultColumn
+      defaultColumn,
+      initialState
     },
     useFilters,
     useSortBy

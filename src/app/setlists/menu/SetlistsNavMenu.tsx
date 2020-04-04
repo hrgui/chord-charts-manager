@@ -5,13 +5,20 @@ import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import QueueMusic from "@material-ui/icons/QueueMusic";
 import ListSubheader from "lib/layout/ListSubheader";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router-dom";
 
 export function SetlistsNavMenu() {
   const { t } = useTranslation();
+  const location = useLocation();
   return (
     <List dense>
       <ListSubheader>{t("setlist:plural")}</ListSubheader>
-      <ListItemLink to="/setlist/new">
+      <ListItemLink
+        to={{
+          pathname: "/setlist/new",
+          state: { background: location }
+        }}
+      >
         <ListItemIcon>
           <PlaylistAdd />
         </ListItemIcon>
