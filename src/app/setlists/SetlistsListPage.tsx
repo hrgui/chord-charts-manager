@@ -29,11 +29,11 @@ export function TitleColumnDef() {
     Cell: ({
       cell: {
         value,
-        row: { original: data }
-      }
+        row: { original: data },
+      },
     }) => {
       return <SetlistTitleCell value={value} data={data} />;
-    }
+    },
   };
 }
 
@@ -44,43 +44,64 @@ export function MobileTitleColumnDef() {
     Cell: ({
       cell: {
         value,
-        row: { original: data }
-      }
+        row: { original: data },
+      },
     }) => {
       return <MobileSetlistTitleCell value={value} data={data} />;
-    }
+    },
   };
 }
 
-export function ActionsColumnDef() {
+export function ActionsColumnDef(
+  { addToSetlistMode, song_id, onRequestClose } = {
+    addToSetlistMode: false,
+    song_id: undefined,
+    onRequestClose: () => null,
+  }
+) {
   return {
     Header: "Actions",
     id: "actions",
     Cell: ({
       cell: {
-        row: { original: data }
-      }
+        row: { original: data },
+      },
     }) => {
-      return <SetlistActions setlist={data} />;
-    }
+      return (
+        <SetlistActions
+          setlist={data}
+          onRequestClose={onRequestClose}
+          addToSetlistMode={addToSetlistMode}
+          song_id={song_id}
+        />
+      );
+    },
   };
 }
 
 export function DateColumnDef() {
   return {
     Header: "Date",
-    accessor: "date"
+    accessor: "date",
   };
 }
 
 export function LeaderColumnDef() {
   return {
     accessor: "leader",
-    Header: "Leader"
+    Header: "Leader",
   };
 }
 
-const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
+export function SetlistListContainer({
+  addToSetlistMode,
+  song_id,
+  onRequestClose = () => null,
+}: {
+  addToSetlistMode?;
+  song_id?;
+  onRequestClose?;
+}) {
   const { t } = useTranslation();
   const { error, loading, data } = useQuery(
     gql`
@@ -94,7 +115,6 @@ const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
     `,
     { fetchPolicy: "cache-and-network" }
   );
-  useTitle("All Setlists", null);
 
   return (
     <WithWidth>
@@ -105,9 +125,12 @@ const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
               TitleColumnDef(),
               LeaderColumnDef(),
               DateColumnDef(),
-              ActionsColumnDef()
+              ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
             ]
-          : [MobileTitleColumnDef(), ActionsColumnDef()];
+          : [
+              MobileTitleColumnDef(),
+              ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
+            ];
 
         return (
           <Table
@@ -120,7 +143,7 @@ const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
               </Trans>
             }
             initialState={{
-              sortBy: [{ id: "date", desc: true }]
+              sortBy: [{ id: "date", desc: true }],
             }}
             isLoading={loading}
             isPageTable
@@ -131,6 +154,12 @@ const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
       }}
     </WithWidth>
   );
+}
+
+const SetlistsListPage: React.SFC<SetlistsListPageProps> = () => {
+  useTitle("All Setlists", null);
+
+  return <SetlistListContainer />;
 };
 
 export default SetlistsListPage;

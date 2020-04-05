@@ -10,6 +10,8 @@ import { ListItem, ListItemIcon } from "@material-ui/core";
 import { useUserData } from "lib/hooks/useUserData";
 import useDeleteSongMutation from "./hooks/useDeleteSongMutation";
 import { useTranslation } from "react-i18next";
+import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
+import { useLocation } from "react-router-dom";
 
 interface SongActionsProps {
   song?: any;
@@ -20,6 +22,7 @@ function SongActionsList({ id }) {
   const [deleteSetlist] = useDeleteSongMutation();
   const isAdmin = isUserAdmin(user);
   const { t } = useTranslation();
+  const location = useLocation();
 
   return (
     <List dense disablePadding>
@@ -56,6 +59,19 @@ function SongActionsList({ id }) {
           <ListItemText primary={t("delete")} />
         </ListItem>
       )}
+      <ListItemLink
+        to={{
+          pathname: "/setlist/add",
+          search: `?song_id=${id}`,
+          state: { background: location },
+        }}
+        button
+      >
+        <ListItemIcon>
+          <PlaylistAdd />
+        </ListItemIcon>
+        <ListItemText primary={t("song:action/add_to_setlist")} />
+      </ListItemLink>
     </List>
   );
 }

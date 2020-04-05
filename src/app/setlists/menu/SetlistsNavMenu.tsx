@@ -1,7 +1,7 @@
 import * as React from "react";
 import { List, ListItemIcon, ListItemText } from "@material-ui/core";
 import ListItemLink from "lib/layout/ListItemLink";
-import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
+import PostAdd from "@material-ui/icons/PostAdd";
 import QueueMusic from "@material-ui/icons/QueueMusic";
 import ListSubheader from "lib/layout/ListSubheader";
 import { useTranslation } from "react-i18next";
@@ -16,11 +16,11 @@ export function SetlistsNavMenu() {
       <ListItemLink
         to={{
           pathname: "/setlist/new",
-          state: { background: location }
+          state: { background: location },
         }}
       >
         <ListItemIcon>
-          <PlaylistAdd />
+          <PostAdd />
         </ListItemIcon>
         <ListItemText primary={t("setlist:action/new_setlist")} />
       </ListItemLink>

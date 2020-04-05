@@ -8,6 +8,7 @@ import SetlistsListPage from "app/setlists/SetlistsListPage";
 import SongViewPage from "app/songs/SongViewPage";
 import SongFormPage from "app/songs/form/SongFormPage";
 import SetlistFormPage from "app/setlists/form/SetlistFormPage";
+import AddToSetlistFormPage from "app/setlists/form/AddToSetlistFormPage";
 import SetlistViewPage from "app/setlists/SetlistViewPage";
 import RouteModal from "app/core/RouteModal";
 
@@ -28,6 +29,11 @@ export function AppRootRoutes() {
         <ProtectedRoute component={SetlistFormPage} path="/setlist/new" exact />
         <ProtectedRoute component={SetlistsListPage} path="/setlists" exact />
         <ProtectedRoute
+          component={AddToSetlistFormPage}
+          path="/setlist/add"
+          exact
+        />
+        <ProtectedRoute
           component={SetlistViewPage}
           path="/setlist/:id/:songIndex?"
           exact
@@ -37,6 +43,11 @@ export function AppRootRoutes() {
       {background && (
         <RouteModal open={!!background}>
           <Switch location={location}>
+            <ProtectedRoute
+              component={AddToSetlistFormPage}
+              path="/setlist/add"
+              exact
+            />
             <ProtectedRoute
               component={SetlistFormPage}
               path="/setlist/new"

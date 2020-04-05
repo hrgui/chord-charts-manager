@@ -10,16 +10,57 @@ import { ListItem, ListItemIcon } from "@material-ui/core";
 import { useUserData } from "lib/hooks/useUserData";
 import useDeleteSetlistMutation from "./hooks/useDeleteSetlistMutation";
 import { useTranslation } from "react-i18next";
+import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
+import useAddToSetlistMutation from "./hooks/useAddToSetlistMutation";
 
 interface SetlistActionsProps {
   setlist?: any;
+  addToSetlistMode?: boolean;
+  song_id?: string;
+  onRequestClose?: () => any;
 }
 
-function SetlistActionsList({ id }) {
+function SetlistActionsList({
+  id,
+  addToSetlistMode,
+  song_id,
+  onRequestClose,
+}: {
+  id;
+  addToSetlistMode?;
+  song_id?;
+  onRequestClose?;
+}) {
   const user = useUserData();
   const [deleteSetlist] = useDeleteSetlistMutation();
   const isAdmin = isUserAdmin(user);
   const { t } = useTranslation();
+  const [addToSetlist] = useAddToSetlistMutation(id, song_id);
+
+  if (addToSetlistMode) {
+    return (
+      <List dense>
+        <ListItem
+          button
+          onClick={async (e) => {
+            addToSetlist();
+            onRequestClose();
+          }}
+        >
+          <ListItemIcon>
+            <PlaylistAdd />
+          </ListItemIcon>
+          <ListItemText primary={t("song:action/add_to_setlist")} />
+        </ListItem>
+        <ListItemLink to={`/setlist/${id}/edit?song_id=${song_id}`}>
+          <ListItemIcon>
+            <Edit />
+          </ListItemIcon>
+          <ListItemText primary={t("song:action/add_to_setlist_and_edit")} />
+        </ListItemLink>
+      </List>
+    );
+  }
 
   return (
     <List dense disablePadding>
@@ -63,7 +104,12 @@ function SetlistActionsList({ id }) {
 const SetlistActions: React.SFC<SetlistActionsProps> = (props) => {
   return (
     <ActionsMenu>
-      <SetlistActionsList id={props.setlist.id} />
+      <SetlistActionsList
+        id={props.setlist.id}
+        addToSetlistMode={props.addToSetlistMode}
+        song_id={props.song_id}
+        onRequestClose={props.onRequestClose}
+      />
     </ActionsMenu>
   );
 };

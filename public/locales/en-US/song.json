@@ -1,9 +1,12 @@
 {
   "single": "Song",
   "plural": "Songs",
+  "action/add_to_setlist": "Add to Setlist",
+  "action/add_to_setlist_and_edit": "Add to Setlist & Edit",
   "action/new_song": "New Song",
   "action/list_song": "All Songs",
   "action/confirm_delete": "Are you sure you want to delete this song?",
+  "add_to_setlist/instructions": "Click on any setlist to add the song to the setlist",
   "list/emptyAction": "<0>Create a new song</0> and it'll show up here.",
   "list/emptyHeader": "Empty in songs.",
   "navMenu/title": "View Song Controls",

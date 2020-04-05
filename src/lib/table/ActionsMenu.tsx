@@ -2,6 +2,7 @@ import * as React from "react";
 import MoreVert from "@material-ui/icons/MoreVert";
 import { IconButton } from "@material-ui/core";
 import { Menu } from "../layout/Menu";
+import { isFunction } from "formik";
 
 interface SetlistActionsProps {
   children?: any;
@@ -35,7 +36,9 @@ const ActionsMenu: React.SFC<SetlistActionsProps> = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {children}
+        {isFunction(children)
+          ? children({ ...props, onClose: handleClose })
+          : children}
       </Menu>
     </>
   );

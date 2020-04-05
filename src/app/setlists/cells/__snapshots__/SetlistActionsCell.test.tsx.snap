@@ -4,7 +4,7 @@ exports[`renders setlist actions given a setlist 1`] = `
 <div>
   <button
     aria-haspopup="true"
-    class="MuiButtonBase-root MuiIconButton-root"
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
     tabindex="0"
     type="button"
   >
@@ -13,7 +13,7 @@ exports[`renders setlist actions given a setlist 1`] = `
     >
       <svg
         aria-hidden="true"
-        class="MuiSvgIcon-root"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
         focusable="false"
         role="presentation"
         viewBox="0 0 24 24"

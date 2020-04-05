@@ -40,6 +40,7 @@ const typeDefs_ = gql`
     createSetlist(record: SetlistInput!): Setlist!
     updateSetlist(id: ID!, record: SetlistInput!): Setlist!
     deleteSetlist(id: ID!): Setlist!
+    addSongToSetlist(id: ID!, song_id: ID!): JSON
     createGroup(record: GroupInput!): Group!
     updateGroup(id: ID!, record: GroupInput!): Group!
     deleteGroup(id: ID!): Group!
@@ -172,14 +173,14 @@ const rootResolvers = {
       let songs = await api.song.list({ args: {}, user });
       //@ts-ignore
       const fuse = new Fuse(songs, {
-        keys: ["title", "artist"]
+        keys: ["title", "artist"],
       });
       return fuse.search(args.search);
     },
     setlistSongs: async (root, { id }, { api }) => {
       const setlist = await api.setlist.get(id);
-      return Promise.all(setlist.songs.map(s => api.song.get(s)));
-    }
+      return Promise.all(setlist.songs.map((s) => api.song.get(s)));
+    },
   },
   Mutation: {
     session: async (root, args, context) => {
@@ -220,7 +221,7 @@ const rootResolvers = {
           currentGroupId || (groups && groups[0] && groups[0].id) || null,
         pendingGroups: pendingGroups,
         work_as,
-        isNewUser: groups.length === 0 && !isUserAdmin(user)
+        isNewUser: groups.length === 0 && !isUserAdmin(user),
       };
 
       return res;
@@ -317,8 +318,15 @@ const rootResolvers = {
       const res = await api.group.demoteAdminInGroup(id, group, userUid);
 
       return res;
-    }
-  }
+    },
+    addSongToSetlist: async (source, { song_id, id }, context) => {
+      const { api } = context;
+      const setlist = await api.setlist.get(id);
+      setlist.songs.push(song_id);
+      console.log(setlist);
+      return api.setlist.update(id, setlist);
+    },
+  },
 };
 
 function createFirestoreResolvers(collectionName) {
@@ -333,7 +341,7 @@ function createFirestoreResolvers(collectionName) {
       //list
       [pluralName]: (root, args, { api, user }) => {
         return api[collectionName].list({ args, user });
-      }
+      },
     },
     Mutation: {
       // create
@@ -349,8 +357,8 @@ function createFirestoreResolvers(collectionName) {
       },
       [camelCase("delete_" + collectionName)]: (root, { id }, { api }) => {
         return api[collectionName].delete(id);
-      }
-    }
+      },
+    },
   };
 }
 
@@ -362,7 +370,7 @@ const schema_ = makeExecutableSchema({
     createFirestoreResolvers("setlist"),
     createFirestoreResolvers("group"),
     createFirestoreResolvers("user")
-  )
+  ),
 });
 
 export default schema_;
