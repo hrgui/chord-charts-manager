@@ -1,5 +1,5 @@
 import * as React from "react";
-import { List, ListItemText } from "@material-ui/core";
+import { List, ListItemText, Button } from "@material-ui/core";
 import ListItemLink from "lib/layout/ListItemLink";
 import ActionsMenu from "lib/table/ActionsMenu";
 import Delete from "@material-ui/icons/Delete";
@@ -15,9 +15,11 @@ import { useLocation } from "react-router-dom";
 
 interface SongActionsProps {
   song?: any;
+  addToSetlistMode?: boolean;
+  onAddSong: (song) => any;
 }
 
-function SongActionsList({ id }) {
+function SongActionsList({ id, addToSetlistMode }: { id?; addToSetlistMode? }) {
   const user = useUserData();
   const [deleteSetlist] = useDeleteSongMutation();
   const isAdmin = isUserAdmin(user);
@@ -77,9 +79,16 @@ function SongActionsList({ id }) {
 }
 
 const SongActions: React.SFC<SongActionsProps> = (props) => {
+  if (props.addToSetlistMode) {
+    return <Button onClick={(e) => props.onAddSong(props.song)}>Add</Button>;
+  }
+
   return (
     <ActionsMenu>
-      <SongActionsList id={props.song.id} />
+      <SongActionsList
+        id={props.song.id}
+        addToSetlistMode={props.addToSetlistMode}
+      />
     </ActionsMenu>
   );
 };

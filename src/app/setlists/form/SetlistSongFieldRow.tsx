@@ -4,6 +4,8 @@ import {
   ButtonGroup,
   TableRow,
   TableCell,
+  makeStyles,
+  Theme,
 } from "@material-ui/core";
 import { useGetSongQuery } from "app/songs/hooks/useGetSongQuery";
 import ChordSelect from "app/songs/components/ChordSelect";
@@ -11,6 +13,7 @@ import { Skeleton } from "@material-ui/lab";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useTranslation } from "react-i18next";
 
 export interface ISetlistSongFieldRowProps {
   index;
@@ -66,6 +69,26 @@ export default function SetlistSongFieldRow(props: ISetlistSongFieldRowProps) {
             <DeleteIcon fontSize="small" />
           </IconButton>
         </ButtonGroup>
+      </TableCell>
+    </TableRow>
+  );
+}
+
+const useStyles = makeStyles((theme: Theme) => {
+  return {
+    cell: {
+      textAlign: "center",
+    },
+  };
+});
+
+export function NoSongsRow({ isNew }: { isNew? }) {
+  const { t } = useTranslation();
+  const classes = useStyles();
+  return (
+    <TableRow>
+      <TableCell className={classes.cell}>
+        {isNew ? t("setlist:form/no_songs_new") : t("setlist:form/no_songs")}
       </TableCell>
     </TableRow>
   );

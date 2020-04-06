@@ -5,6 +5,7 @@ import {
   DialogActions,
   Table,
   TableBody,
+  Dialog,
 } from "@material-ui/core";
 import { TextField } from "lib/form/TextField";
 import styled from "styled-components";
@@ -12,8 +13,9 @@ import FormActions from "lib/form/FormActions";
 import { Form } from "lib/form/Form";
 import ShareBarField from "app/share/ShareBarField";
 import { FieldArray } from "formik";
-import SetlistSongFieldRow from "./SetlistSongFieldRow";
+import SetlistSongFieldRow, { NoSongsRow } from "./SetlistSongFieldRow";
 import { useTranslation } from "react-i18next";
+import { SongListContainer } from "app/songs/SongsListPage";
 
 export interface ISetlistFormProps {
   isNew?;
@@ -41,9 +43,10 @@ const FormHeader = styled.h3`
 `;
 
 export const SetlistForm = (props: ISetlistFormProps) => {
-  const { data, isLoading, isModalMode } = props;
+  const { data, isLoading, isModalMode, isNew } = props;
   const SetlistFormActions = isModalMode ? DialogActions : FormActions;
   const { t } = useTranslation();
+  const [open, setDialogOpen] = React.useState(false);
 
   if (isLoading) {
     return null;
@@ -56,7 +59,7 @@ export const SetlistForm = (props: ISetlistFormProps) => {
       onSubmitSuccess={props.onSubmitSuccess}
       onSubmitError={props.onSubmitError}
     >
-      {({ handleSubmit, values }) => (
+      {({ handleSubmit, values, setFieldValue }) => (
         <Container>
           <ShareBarField name="share" />
           <FormCard>
@@ -89,6 +92,10 @@ export const SetlistForm = (props: ISetlistFormProps) => {
               <TableBody>
                 <FieldArray name="songs">
                   {({ swap, remove, form }) => {
+                    if (form.values.songs.length === 0) {
+                      return <NoSongsRow isNew={isNew} />;
+                    }
+
                     return form.values.songs.map((songId, index) => {
                       return (
                         <SetlistSongFieldRow
@@ -114,7 +121,20 @@ export const SetlistForm = (props: ISetlistFormProps) => {
                 </FieldArray>
               </TableBody>
             </Table>
+            <Button variant="outlined" onClick={(e) => setDialogOpen(true)}>
+              Add Song
+            </Button>
           </FormCard>
+
+          <Dialog open={open}>
+            <SongListContainer
+              addToSetlistMode
+              onAddSong={({ id }) => {
+                setFieldValue("songs", [...values.songs, id]);
+                setDialogOpen(false);
+              }}
+            />
+          </Dialog>
           <SetlistFormActions>
             <Button
               onClick={(e) => {

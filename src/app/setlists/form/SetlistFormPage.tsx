@@ -5,10 +5,11 @@ import { useSnackbar } from "notistack";
 import { useUserData } from "lib/hooks/useUserData";
 import {
   useSaveSetlistMutation,
-  useCreateSetlistMutation
+  useCreateSetlistMutation,
 } from "../hooks/useSaveSetlistMutation";
 import { useGetSetlistQuery } from "../hooks/useGetSetlistQuery";
 import { useModalRouteMode } from "lib/hooks/useModalRouteMode";
+import { useTranslation } from "react-i18next";
 
 export interface SetlistFormPageProps {
   path?: string;
@@ -22,12 +23,13 @@ function prepareValues({ id, __typename, ...other }) {
   return other;
 }
 
-const SetlistEditPage: React.SFC<SetlistFormPageProps> = props => {
+const SetlistEditPage: React.SFC<SetlistFormPageProps> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   let { loading: isLoading, error: isError, data } = useGetSetlistQuery(
     props.id
   );
   const [updateSetlist] = useSaveSetlistMutation(props.id);
+  const { t } = useTranslation();
 
   data = data?.setlist;
 
@@ -35,30 +37,29 @@ const SetlistEditPage: React.SFC<SetlistFormPageProps> = props => {
     <SetlistForm
       isModalMode={props.isModalMode}
       isLoading={isLoading}
-      onSubmit={values =>
+      onSubmit={(values) =>
         updateSetlist({
           variables: {
             id: props.id,
-            data: prepareValues(values)
-          }
+            data: prepareValues(values),
+          },
         })
       }
       onSubmitSuccess={(_, values) => {
         enqueueSnackbar(
-          `Setlist ${values.title || values.id} has been saved.`,
+          t("setlist:message/saveSuccess", {
+            setlist: values.title || values.id,
+          }),
           {
-            variant: "success"
+            variant: "success",
           }
         );
         props.navigate(`/setlist/${props.id}`);
       }}
-      onSubmitError={e => {
-        enqueueSnackbar(
-          `Setlist could not be saved. Please check for any errors and try again.`,
-          { variant: "error" }
-        );
+      onSubmitError={(e) => {
+        enqueueSnackbar(t("setlist:message/saveError"), { variant: "error" });
         enqueueSnackbar(<pre>{JSON.stringify(e, null, 2)}</pre>, {
-          variant: "error"
+          variant: "error",
         });
         console.error(e);
       }}
@@ -68,7 +69,7 @@ const SetlistEditPage: React.SFC<SetlistFormPageProps> = props => {
   );
 };
 
-const getNewSetlistTemplate = currentGroupId => {
+const getNewSetlistTemplate = (currentGroupId) => {
   const sunday = toDomDate(getUpcomingSunday());
   return {
     title: `Sunday Setlist - ${sunday}`,
@@ -76,43 +77,44 @@ const getNewSetlistTemplate = currentGroupId => {
     songs: [],
     settings: {},
     share: {
-      [currentGroupId]: "editor"
-    }
+      [currentGroupId]: "editor",
+    },
   };
 };
 
-const SetlistNewPage: React.SFC<SetlistFormPageProps> = props => {
+const SetlistNewPage: React.SFC<SetlistFormPageProps> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const [createSetlist] = useCreateSetlistMutation();
   const setlistTemplate = getNewSetlistTemplate(props.currentGroupId);
+  const { t } = useTranslation();
+
   return (
     <SetlistForm
       isModalMode={props.isModalMode}
       isNew
       data={setlistTemplate}
-      onSubmit={values =>
+      onSubmit={(values) =>
         createSetlist({
           variables: {
-            data: values
-          }
+            data: values,
+          },
         })
       }
       onSubmitSuccess={(_, values) => {
         enqueueSnackbar(
-          `Setlist ${values.title || values.id} has been saved.`,
+          t("setlist:message/saveSuccess", {
+            setlist: values.title || values.id,
+          }),
           {
-            variant: "success"
+            variant: "success",
           }
         );
         props.navigate(`/setlists`);
       }}
-      onSubmitError={e => {
-        enqueueSnackbar(
-          `Setlist could not be saved. Please check for any errors and try again.`,
-          { variant: "error" }
-        );
+      onSubmitError={(e) => {
+        enqueueSnackbar(t("setlist:message/saveError"), { variant: "error" });
         enqueueSnackbar(<pre>{JSON.stringify(e, null, 2)}</pre>, {
-          variant: "error"
+          variant: "error",
         });
         console.error(e);
       }}
@@ -120,7 +122,7 @@ const SetlistNewPage: React.SFC<SetlistFormPageProps> = props => {
   );
 };
 
-export default props => {
+export default (props) => {
   const user = useUserData() || {};
   const { id } = props.match.params;
   const SetlistFormPage = id ? SetlistEditPage : SetlistNewPage;
