@@ -12,6 +12,8 @@ import useDeleteSetlistMutation from "./hooks/useDeleteSetlistMutation";
 import { useTranslation } from "react-i18next";
 import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 import useAddToSetlistMutation from "./hooks/useAddToSetlistMutation";
+import { useSnackbar } from "notistack";
+import { useHistory } from "react-router-dom";
 
 interface SetlistActionsProps {
   setlist?: any;
@@ -22,11 +24,13 @@ interface SetlistActionsProps {
 
 function SetlistActionsList({
   id,
+  name,
   addToSetlistMode,
   song_id,
   onRequestClose,
 }: {
   id;
+  name;
   addToSetlistMode?;
   song_id?;
   onRequestClose?;
@@ -36,6 +40,8 @@ function SetlistActionsList({
   const isAdmin = isUserAdmin(user);
   const { t } = useTranslation();
   const [addToSetlist] = useAddToSetlistMutation(id, song_id);
+  const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
 
   if (addToSetlistMode) {
     return (
@@ -43,7 +49,10 @@ function SetlistActionsList({
         <ListItem
           button
           onClick={async (e) => {
-            addToSetlist();
+            await addToSetlist();
+            enqueueSnackbar(t("song:action_success/add_to_setlist", { name }), {
+              variant: "success",
+            });
             onRequestClose();
           }}
         >
@@ -52,12 +61,21 @@ function SetlistActionsList({
           </ListItemIcon>
           <ListItemText primary={t("song:action/add_to_setlist")} />
         </ListItem>
-        <ListItemLink to={`/setlist/${id}/edit?song_id=${song_id}`}>
+        <ListItem
+          button
+          onClick={async () => {
+            await addToSetlist();
+            enqueueSnackbar(t("song:action_success/add_to_setlist", { name }), {
+              variant: "success",
+            });
+            history.push(`/setlist/${id}/edit`);
+          }}
+        >
           <ListItemIcon>
             <Edit />
           </ListItemIcon>
           <ListItemText primary={t("song:action/add_to_setlist_and_edit")} />
-        </ListItemLink>
+        </ListItem>
       </List>
     );
   }
@@ -106,6 +124,7 @@ const SetlistActions: React.SFC<SetlistActionsProps> = (props) => {
     <ActionsMenu>
       <SetlistActionsList
         id={props.setlist.id}
+        name={props.setlist.title}
         addToSetlistMode={props.addToSetlistMode}
         song_id={props.song_id}
         onRequestClose={props.onRequestClose}

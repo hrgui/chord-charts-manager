@@ -229,7 +229,7 @@ function UnstyledTable({
 }
 
 export const Table: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - 100px);
 
   & td {
     white-space: nowrap;

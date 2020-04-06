@@ -2,6 +2,7 @@
   "single": "Song",
   "plural": "Songs",
   "action/add_to_setlist": "Add to Setlist",
+  "action_success/add_to_setlist": "Song succesfully added to Setlist {{name}}",
   "action/add_to_setlist_and_edit": "Add to Setlist & Edit",
   "action/new_song": "New Song",
   "action/list_song": "All Songs",

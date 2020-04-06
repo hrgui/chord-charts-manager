@@ -4,8 +4,7 @@ import { useTitle } from "lib/hooks/useTitle";
 import { useParams } from "react-router-dom";
 import Loading from "lib/layout/Loading";
 import SongView from "./SongView";
-import { gql, useQuery } from "@apollo/client";
-import SongFragment from "./SongFragment";
+import { useGetSongQuery } from "./hooks/useGetSongQuery";
 
 interface SongViewContainerProps {
   id?: string;
@@ -15,28 +14,15 @@ interface SongViewContainerProps {
   onChangeSettings?: any;
 }
 
-export const SongViewContainer: React.SFC<SongViewContainerProps> = props => {
-  const { loading: isLoading, error: isError, data } = useQuery(
-    gql`
-      query getSong($id: String) {
-        song(id: $id) {
-          ...Song
-        }
-      }
-
-      ${SongFragment}
-    `,
-    {
-      variables: {
-        id: props.id
-      }
-    }
+export const SongViewContainer: React.SFC<SongViewContainerProps> = (props) => {
+  const { loading: isLoading, error: isError, data } = useGetSongQuery(
+    props.id
   );
   const {
     isInSetlist,
     isActiveInSetlist,
     settings,
-    onChangeSettings = () => null
+    onChangeSettings = () => null,
   } = props;
   useTitle(`View Song: ${isLoading ? props.id : data?.song.title}`);
 

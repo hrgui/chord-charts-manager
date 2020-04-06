@@ -34,6 +34,11 @@ export function AppRootRoutes() {
           exact
         />
         <ProtectedRoute
+          component={SetlistFormPage}
+          path="/setlist/:id/edit"
+          exact
+        />
+        <ProtectedRoute
           component={SetlistViewPage}
           path="/setlist/:id/:songIndex?"
           exact
@@ -51,6 +56,11 @@ export function AppRootRoutes() {
             <ProtectedRoute
               component={SetlistFormPage}
               path="/setlist/new"
+              exact
+            />
+            <ProtectedRoute
+              component={SetlistFormPage}
+              path="/setlist/:id/edit"
               exact
             />
           </Switch>

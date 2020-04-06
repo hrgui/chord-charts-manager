@@ -4,7 +4,7 @@ import {
   ListItemText,
   ListItem,
   ListItemIcon,
-  Divider
+  Divider,
 } from "@material-ui/core";
 import Edit from "@material-ui/icons/Edit";
 import ListItemLink from "lib/layout/ListItemLink";
@@ -69,10 +69,10 @@ export function SetlistNavigation({ id, songs, settings, onChangeSettings }) {
             ) : (
               <>
                 <ListItemText
-                  primary={`${hidx}. ${fetchedSong.title}`}
+                  primary={`${hidx}. ${fetchedSong?.title}`}
                 ></ListItemText>
                 <ChordSelect
-                  onChange={e => handleChangeSettings(e.target.value, sid)}
+                  onChange={(e) => handleChangeSettings(e.target.value, sid)}
                   value={
                     (settings[sid] && settings[sid].overrideKey) ||
                     fetchedSong.key
@@ -93,7 +93,7 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
     onChangeSettings,
     settings = {},
     onSaveSetlistSettings,
-    hasUnsavedSettings
+    hasUnsavedSettings,
   } = props;
   const { t } = useTranslation();
   const { id, songs = [] } = props.setlist;
@@ -107,7 +107,7 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
       <Divider />
       <ListSubheader>{t("setlist:menu/controls/title")}</ListSubheader>
       {hasUnsavedSettings && (
-        <ListItem button onClick={e => onSaveSetlistSettings(settings)}>
+        <ListItem button onClick={(e) => onSaveSetlistSettings(settings)}>
           <ListItemIcon>
             <UntrackedSettings />
           </ListItemIcon>
@@ -118,14 +118,14 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
         <ListItemIcon>
           <Edit />
         </ListItemIcon>
-        <ListItemText primary={"Edit"} />
+        <ListItemText primary={t("edit")} />
       </ListItemLink>
       {isAdmin && (
         <ListItem
           button
           onClick={async () => {
             const { extensions } = await deleteSetlist({
-              variables: { id: id }
+              variables: { id: id },
             });
 
             if (extensions && extensions.cancelled) {
@@ -138,7 +138,7 @@ export function CurrentSetlistNavMenu(props: CurrentSetlistNavMenuProps) {
           <ListItemIcon>
             <Delete />
           </ListItemIcon>
-          <ListItemText primary={"delete"} />
+          <ListItemText primary={t("delete")} />
         </ListItem>
       )}
       <Divider />

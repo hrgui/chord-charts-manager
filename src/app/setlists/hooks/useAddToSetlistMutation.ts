@@ -7,7 +7,7 @@ export function useAddToSetlistMutation(id, song_id) {
         addSongToSetlist(song_id: $song_id, id: $id)
       }
     `,
-    { variables: { song_id, id } }
+    { variables: { song_id, id }, refetchQueries: ["getOneSetlist"] }
   );
 }
 
