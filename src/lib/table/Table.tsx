@@ -228,7 +228,7 @@ function UnstyledTable({
   );
 }
 
-export const Table: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
+const UnmemoTable: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
   max-height: calc(100vh - 100px);
 
   & td {
@@ -262,3 +262,5 @@ export const Table: React.FunctionComponent<TableProps> = styled(UnstyledTable)`
     color: transparent;
   }
 `;
+
+export const Table = UnmemoTable;

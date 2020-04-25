@@ -51,57 +51,65 @@ export function SongListContainer({
     ${SongFragment}
   `);
 
+  const columns = React.useMemo(() => {
+    return [
+      {
+        accessor: "title",
+        Header: "Title",
+        Cell: ({
+          cell: {
+            value,
+            row: { original: data },
+          },
+        }) => {
+          return <SongTitleCell value={value} data={data} />;
+        },
+      },
+      {
+        accessor: "artist",
+        Header: "Artist",
+      },
+      {
+        accessor: "key",
+        Header: "Key",
+      },
+      {
+        Header: "Actions",
+        id: "actions",
+        Cell: ({
+          cell: {
+            row: { original: data },
+          },
+        }) => {
+          return (
+            <SongActions
+              onAddSong={onAddSong}
+              addToSetlistMode={addToSetlistMode}
+              song={data}
+            />
+          );
+        },
+      },
+    ];
+  }, [addToSetlistMode, onAddSong]);
+
+  const emptyAction = React.useMemo(() => {
+    return (
+      <Trans i18nKey="song:list/emptyAction">
+        <Link to="/song/new" alt="New Song">
+          Create a new song
+        </Link>{" "}
+        and it'll show up here.
+      </Trans>
+    );
+  }, []);
+
   return (
     <Table
       error={error}
       emptyHeader={t("song:list/emptyHeader")}
-      emptyAction={
-        <Trans i18nKey="song:list/emptyAction">
-          <Link to="/song/new" alt="New Song">
-            Create a new song
-          </Link>{" "}
-          and it'll show up here.
-        </Trans>
-      }
-      columns={[
-        {
-          accessor: "title",
-          Header: "Title",
-          Cell: ({
-            cell: {
-              value,
-              row: { original: data },
-            },
-          }) => {
-            return <SongTitleCell value={value} data={data} />;
-          },
-        },
-        {
-          accessor: "artist",
-          Header: "Artist",
-        },
-        {
-          accessor: "key",
-          Header: "Key",
-        },
-        {
-          Header: "Actions",
-          id: "actions",
-          Cell: ({
-            cell: {
-              row: { original: data },
-            },
-          }) => {
-            return (
-              <SongActions
-                onAddSong={onAddSong}
-                addToSetlistMode={addToSetlistMode}
-                song={data}
-              />
-            );
-          },
-        },
-      ]}
+      emptyAction={emptyAction}
+      columns={columns}
       isLoading={loading}
       isPageTable
       data={data?.songs || []}
@@ -111,71 +119,7 @@ export function SongListContainer({
 
 const SongsListPage: React.SFC<SongsListPageProps> = () => {
   useTitle("All Songs", null);
-
   return <SongListContainer />;
-
-  // const { t } = useTranslation();
-  // const { error, loading, data } = useQuery(gql`
-  //   query getSongs {
-  //     songs {
-  //       ...Song
-  //     }
-  //   }
-
-  //   ${SongFragment}
-  // `);
-  // useTitle("All Songs", null);
-
-  // return (
-  //   <Table
-  //     error={error}
-  //     emptyHeader={t("song:list/emptyHeader")}
-  //     emptyAction={
-  //       <Trans i18nKey="song:list/emptyAction">
-  //         <Link to="/song/new" alt="New Song">
-  //           Create a new song
-  //         </Link>{" "}
-  //         and it'll show up here.
-  //       </Trans>
-  //     }
-  //     columns={[
-  //       {
-  //         accessor: "title",
-  //         Header: "Title",
-  //         Cell: ({
-  //           cell: {
-  //             value,
-  //             row: { original: data },
-  //           },
-  //         }) => {
-  //           return <SongTitleCell value={value} data={data} />;
-  //         },
-  //       },
-  //       {
-  //         accessor: "artist",
-  //         Header: "Artist",
-  //       },
-  //       {
-  //         accessor: "key",
-  //         Header: "Key",
-  //       },
-  //       {
-  //         Header: "Actions",
-  //         id: "actions",
-  //         Cell: ({
-  //           cell: {
-  //             row: { original: data },
-  //           },
-  //         }) => {
-  //           return <SongActions song={data} />;
-  //         },
-  //       },
-  //     ]}
-  //     isLoading={loading}
-  //     isPageTable
-  //     data={data?.songs || []}
-  //   />
-  // );
 };
 
 export default SongsListPage;

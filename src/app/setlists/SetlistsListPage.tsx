@@ -93,6 +93,61 @@ export function LeaderColumnDef() {
   };
 }
 
+export function SetlistTable({
+  loading,
+  data,
+  isMobile,
+  addToSetlistMode,
+  song_id,
+  onRequestClose,
+  error,
+}) {
+  const { t } = useTranslation();
+
+  const columns = React.useMemo(() => {
+    return !isMobile
+      ? [
+          TitleColumnDef(),
+          LeaderColumnDef(),
+          DateColumnDef(),
+          ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
+        ]
+      : [
+          MobileTitleColumnDef(),
+          ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
+        ];
+  }, [addToSetlistMode, isMobile, onRequestClose, song_id]);
+
+  const initialState = React.useMemo(() => {
+    return {
+      sortBy: [{ id: "date", desc: true }],
+    };
+  }, []);
+
+  const emptyAction = React.useMemo(
+    () => (
+      <Trans i18nKey="setlist:list/emptyAction">
+        <Link to="/setlist/new">Create a new setlist</Link> and it will show up
+        here.
+      </Trans>
+    ),
+    []
+  );
+
+  return (
+    <Table
+      error={error}
+      emptyHeader={t("setlist:list/emptyHeader")}
+      emptyAction={emptyAction}
+      initialState={initialState}
+      isLoading={loading}
+      isPageTable
+      columns={columns}
+      data={data}
+    />
+  );
+}
+
 export function SetlistListContainer({
   addToSetlistMode,
   song_id,
@@ -102,7 +157,6 @@ export function SetlistListContainer({
   song_id?;
   onRequestClose?;
 }) {
-  const { t } = useTranslation();
   const { error, loading, data } = useQuery(
     gql`
       query getSetlists {
@@ -116,39 +170,21 @@ export function SetlistListContainer({
     { fetchPolicy: "cache-and-network" }
   );
 
+  const setlists = data?.setlists || [];
+
   return (
     <WithWidth>
       {({ width }) => {
         const isMobile = isWidthMobile(width);
-        const columns = !isMobile
-          ? [
-              TitleColumnDef(),
-              LeaderColumnDef(),
-              DateColumnDef(),
-              ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
-            ]
-          : [
-              MobileTitleColumnDef(),
-              ActionsColumnDef({ addToSetlistMode, song_id, onRequestClose }),
-            ];
-
         return (
-          <Table
+          <SetlistTable
+            isMobile={isMobile}
             error={error}
-            emptyHeader={t("setlist:list/emptyHeader")}
-            emptyAction={
-              <Trans i18nKey="setlist:list/emptyAction">
-                <Link to="/setlist/new">Create a new setlist</Link> and it will
-                show up here.
-              </Trans>
-            }
-            initialState={{
-              sortBy: [{ id: "date", desc: true }],
-            }}
-            isLoading={loading}
-            isPageTable
-            columns={columns}
-            data={data?.setlists || []}
+            loading={loading}
+            data={setlists}
+            song_id={song_id}
+            onRequestClose={onRequestClose}
+            addToSetlistMode={addToSetlistMode}
           />
         );
       }}
