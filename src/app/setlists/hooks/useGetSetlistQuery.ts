@@ -4,7 +4,7 @@ import SetlistFragment from "../SetlistFragment";
 export function useGetSetlistQuery(id) {
   return useQuery(
     gql`
-      query getOneSetlist($id: ID) {
+      query getOneSetlist($id: ID!) {
         setlist: setlist(id: $id) {
           ...Setlist
         }

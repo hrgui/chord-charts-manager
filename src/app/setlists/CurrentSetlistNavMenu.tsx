@@ -37,7 +37,7 @@ export function SetlistNavigation({ id, songs, settings, onChangeSettings }) {
   const { t } = useTranslation();
   const { data, loading } = useQuery(
     gql`
-      query getSetlistSongs($id: ID) {
+      query getSetlistSongs($id: ID!) {
         songs: setlistSongs(id: $id) {
           id
           title

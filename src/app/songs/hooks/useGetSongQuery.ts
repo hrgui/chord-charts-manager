@@ -4,7 +4,7 @@ import { gql, useQuery } from "@apollo/client";
 export function useGetSongQuery(id) {
   return useQuery(
     gql`
-      query getSong($id: String) {
+      query getSong($id: ID!) {
         song(id: $id) {
           ...Song
         }

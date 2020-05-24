@@ -15,17 +15,20 @@ export interface SongFormPageProps {
   currentGroupId?: string;
 }
 
-const SongEditPage: React.SFC<SongFormPageProps> = props => {
+const SongEditPage: React.SFC<SongFormPageProps> = (props) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const [updateSong] = useMutation(gql`
-    mutation update($data: SongInput!, $id: ID!) {
-      song: updateSong(id: $id, record: $data) {
-        ...Song
+  const [updateSong] = useMutation(
+    gql`
+      mutation update($data: SongInput!, $id: ID!) {
+        song: updateSong(id: $id, record: $data) {
+          ...Song
+        }
       }
-    }
-    ${SongFragment}
-  `);
+      ${SongFragment}
+    `,
+    { refetchQueries: ["getSongs"] }
+  );
   let { loading: isLoading, error, data } = useQuery(
     gql`
       query getOne($id: ID!) {
@@ -37,8 +40,8 @@ const SongEditPage: React.SFC<SongFormPageProps> = props => {
     `,
     {
       variables: {
-        id: props.id
-      }
+        id: props.id,
+      },
     }
   );
   data = data?.song || {};
@@ -46,27 +49,27 @@ const SongEditPage: React.SFC<SongFormPageProps> = props => {
   return (
     <SongForm
       isLoading={isLoading}
-      onSubmit={values =>
+      onSubmit={(values) =>
         updateSong({
           variables: {
             id: props.id,
-            data: prepareInputForMutation(values)
-          }
+            data: prepareInputForMutation(values),
+          },
         })
       }
       onSubmitSuccess={(res, values) => {
         enqueueSnackbar(
           t(`song:message/saveSuccess`, { song: values.title || values.id }),
           {
-            variant: "success"
+            variant: "success",
           }
         );
         props.navigate(`/song/${props.id}/view`);
       }}
-      onSubmitError={e => {
+      onSubmitError={(e) => {
         enqueueSnackbar(t(`song:message/saveError`), { variant: "error" });
         enqueueSnackbar(<pre>{JSON.stringify(e, null, 2)}</pre>, {
-          variant: "error"
+          variant: "error",
         });
         console.error(e);
       }}
@@ -87,51 +90,54 @@ export function getNewSongTemplate(currentGroupId) {
       {
         type: "text",
         title: "Untitled Section",
-        body: "A B C \n Sample test"
-      }
+        body: "A B C \n Sample test",
+      },
     ],
     share: {
-      [currentGroupId]: "editor"
-    }
+      [currentGroupId]: "editor",
+    },
   };
 }
 
-const SongNewPage: React.SFC<SongFormPageProps> = props => {
+const SongNewPage: React.SFC<SongFormPageProps> = (props) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const [createSong] = useMutation(gql`
-    mutation create($data: SongInput!) {
-      song: createSong(record: $data) {
-        ...Song
+  const [createSong] = useMutation(
+    gql`
+      mutation create($data: SongInput!) {
+        song: createSong(record: $data) {
+          ...Song
+        }
       }
-    }
-    ${SongFragment}
-  `);
+      ${SongFragment}
+    `,
+    { refetchQueries: ["getSongs"] }
+  );
   const newSongTemplate = getNewSongTemplate(props.currentGroupId);
   return (
     <SongForm
       isNew
       data={newSongTemplate}
-      onSubmit={values =>
+      onSubmit={(values) =>
         createSong({
           variables: {
-            data: values
-          }
+            data: values,
+          },
         })
       }
       onSubmitSuccess={(_, values) => {
         enqueueSnackbar(
           t(`song:message/saveSuccess`, { song: values.title || values.id }),
           {
-            variant: "success"
+            variant: "success",
           }
         );
         props.navigate(`/songs`);
       }}
-      onSubmitError={e => {
+      onSubmitError={(e) => {
         enqueueSnackbar(t(`song:message/saveError`), { variant: "error" });
         enqueueSnackbar(<pre>{JSON.stringify(e, null, 2)}</pre>, {
-          variant: "error"
+          variant: "error",
         });
         console.error(e);
       }}
@@ -139,7 +145,7 @@ const SongNewPage: React.SFC<SongFormPageProps> = props => {
   );
 };
 
-export default props => {
+export default (props) => {
   const { id } = useParams();
   const history = useHistory();
   const user = useUserData() || {};

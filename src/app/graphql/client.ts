@@ -1,22 +1,16 @@
 import { applySessionToken } from "lib/firebase/auth";
 import { execute, makePromise } from "apollo-link";
 import { ApolloClient } from "@apollo/client";
-import ExtSchemaLink from "./schema/ExtSchemaLink";
 import { InMemoryCache } from "@apollo/client";
-import schema from "./schema/schema";
 import { gql } from "@apollo/client";
-import context from "./schema/context";
 
 const cache = new InMemoryCache({
-  dataIdFromObject: object => object.id
+  dataIdFromObject: (object) => object.id,
 });
 
 const client: any = new ApolloClient({
+  uri: process.env.REACT_APP_GRAPHQL_API,
   cache,
-  link: new ExtSchemaLink({
-    schema,
-    context
-  })
 });
 
 export async function graphQLFetch(operation) {
