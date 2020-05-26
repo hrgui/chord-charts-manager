@@ -1,16 +1,23 @@
 import { applySessionToken } from "lib/firebase/auth";
 import { execute, makePromise } from "apollo-link";
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, HttpLink, concat } from "@apollo/client";
 import { InMemoryCache } from "@apollo/client";
 import { gql } from "@apollo/client";
+import { patchRequestWithToken } from "./patchRequestWithToken";
+import { setContext } from "@apollo/link-context";
 
-const cache = new InMemoryCache({
-  dataIdFromObject: (object) => object.id,
+const authzLink = setContext(async (operation, prevContext) => {
+  console.log("im called right");
+  return patchRequestWithToken();
 });
 
+const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_API });
+
+const cache = new InMemoryCache();
+
 const client: any = new ApolloClient({
-  uri: process.env.REACT_APP_GRAPHQL_API,
   cache,
+  link: concat(authzLink, httpLink),
 });
 
 export async function graphQLFetch(operation) {

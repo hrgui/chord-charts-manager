@@ -2,9 +2,21 @@ import {
   isAuthenticated,
   session,
   getAuthToken,
-  logout
+  logout,
 } from "lib/firebase/auth";
 import { action, thunk, Action, Thunk } from "easy-peasy";
+import { getDevUser } from "dev/auth";
+
+function _isAuthenticated() {
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.REACT_APP_USE_DEV_AUTH === "1"
+  ) {
+    return getDevUser();
+  }
+
+  return isAuthenticated();
+}
 
 export interface AuthModel {
   user?: any;
@@ -41,10 +53,10 @@ const auth: AuthModel = {
     if (currentUser) {
       return currentUser;
     }
-    const user = await isAuthenticated();
+    const user = await _isAuthenticated();
     actions.setUser(user);
     return user;
-  })
+  }),
 };
 
 export default auth;

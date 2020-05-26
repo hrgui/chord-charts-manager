@@ -118,6 +118,10 @@ function UnstyledTable({
     gotoPage(0);
   };
 
+  if (error) {
+    console.error(error);
+  }
+
   // Render the UI for your table
   return (
     <>

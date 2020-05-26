@@ -8,14 +8,21 @@ export interface RootStoreModel {
   auth: AuthModel;
 }
 
+const {
+  useStoreActions,
+  useStore,
+  useStoreDispatch,
+  useStoreState,
+} = createTypedHooks<RootStoreModel>();
+
 export function configureStore(config?: EasyPeasyConfig<any>) {
   let models = {
     uiState,
-    auth
+    auth,
   };
 
   const initialState = {
-    ...config?.initialState
+    ...config?.initialState,
   };
 
   if (!initialState.uiState) {
@@ -24,25 +31,22 @@ export function configureStore(config?: EasyPeasyConfig<any>) {
 
   initialState.uiState = {
     ...initialState.uiState,
-    darkMode: window.localStorage.getItem(CHORD_CHARTS_DARK_MODE_KEY) === "true"
+    darkMode:
+      window.localStorage.getItem(CHORD_CHARTS_DARK_MODE_KEY) === "true",
   };
 
-  return createStore<RootStoreModel>(models, { ...config, initialState });
+  const store = createStore<RootStoreModel>(models, {
+    ...config,
+    initialState,
+  });
+
+  if (process.env.NODE_ENV === "development") {
+    (window as any).store = store;
+  }
+
+  return store;
 }
 
-const store = configureStore();
-
-const {
-  useStoreActions,
-  useStore,
-  useStoreDispatch,
-  useStoreState
-} = createTypedHooks<RootStoreModel>();
+// const store = configureStore();
 
 export { useStoreActions, useStoreDispatch, useStore, useStoreState };
-
-if (process.env.NODE_ENV !== "production") {
-  (window as any).store = store;
-}
-
-export default store;
