@@ -7,7 +7,6 @@ import { patchRequestWithToken } from "./patchRequestWithToken";
 import { setContext } from "@apollo/link-context";
 
 const authzLink = setContext(async (operation, prevContext) => {
-  console.log("im called right");
   return patchRequestWithToken();
 });
 

@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { StylesProvider } from "@material-ui/styles";
-import { ApolloProvider } from "@apollo/client";
-import { BrowserRouter, Router as TestRouter } from "react-router-dom";
+import { ApolloProvider as RealApolloProvider } from "@apollo/client";
+
+import { BrowserRouter } from "react-router-dom";
 import { AppThemeProvider } from "./AppThemeProvider";
 import { SnackbarProvider } from "notistack";
 import client from "app/graphql/client";
@@ -17,6 +18,8 @@ interface AppControllerProps {
   config?;
   initialState?;
   history?;
+  apolloProviderProps?;
+  componentProviderOverrides?;
 }
 
 export function AppController({
@@ -25,22 +28,32 @@ export function AppController({
   apolloClient = client,
   initialState = null,
   config = null,
-  history
+  history,
+  componentProviderOverrides = {},
+  apolloProviderProps = {},
 }: AppControllerProps) {
   if (config || initialState) {
     store = configureStore({
       initialState: initialState || {
-        uiState: config
-      }
+        uiState: config,
+      },
     });
   }
-  const Router: any = history ? TestRouter : BrowserRouter;
+  // const Router: any = history ? TestRouter : BrowserRouter;
+
+  const Router = !componentProviderOverrides.Router
+    ? BrowserRouter
+    : componentProviderOverrides.Router;
+
+  const ApolloProvider = !componentProviderOverrides.ApolloProvider
+    ? RealApolloProvider
+    : componentProviderOverrides.ApolloProvider;
 
   return (
     <Suspense fallback={<PageLoading />}>
       <StylesProvider injectFirst>
         <StoreProvider store={store}>
-          <ApolloProvider client={apolloClient}>
+          <ApolloProvider client={apolloClient} {...apolloProviderProps}>
             <HelmetProvider>
               <Router history={history}>
                 <AppThemeProvider>

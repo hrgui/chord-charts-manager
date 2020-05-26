@@ -99,20 +99,21 @@ export function getNewSongTemplate(currentGroupId) {
   };
 }
 
+export const CREATE_SONG_QUERY = gql`
+  mutation create($data: SongInput!) {
+    song: createSong(record: $data) {
+      ...Song
+    }
+  }
+  ${SongFragment}
+`;
+
 const SongNewPage: React.SFC<SongFormPageProps> = (props) => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const [createSong] = useMutation(
-    gql`
-      mutation create($data: SongInput!) {
-        song: createSong(record: $data) {
-          ...Song
-        }
-      }
-      ${SongFragment}
-    `,
-    { refetchQueries: ["getSongs"] }
-  );
+  const [createSong] = useMutation(CREATE_SONG_QUERY, {
+    refetchQueries: ["getSongs"],
+  });
   const newSongTemplate = getNewSongTemplate(props.currentGroupId);
   return (
     <SongForm
