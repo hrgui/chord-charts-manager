@@ -157,6 +157,7 @@ export function SetlistListContainer({
   song_id?;
   onRequestClose?;
 }) {
+  console.log("sup");
   const { error, loading, data } = useQuery(
     gql`
       query getSetlists {
@@ -166,8 +167,7 @@ export function SetlistListContainer({
       }
 
       ${SetlistFragment}
-    `,
-    { fetchPolicy: "cache-and-network" }
+    `
   );
 
   const setlists = data?.setlists || [];

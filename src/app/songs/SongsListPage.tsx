@@ -119,6 +119,7 @@ export function SongListContainer({
 
 const SongsListPage: React.SFC<SongsListPageProps> = () => {
   useTitle("All Songs", null);
+  console.log("sup-songlist");
   return <SongListContainer />;
 };
 
