@@ -11,6 +11,9 @@ import SetlistFormPage from "app/setlists/form/SetlistFormPage";
 import AddToSetlistFormPage from "app/setlists/form/AddToSetlistFormPage";
 import SetlistViewPage from "app/setlists/SetlistViewPage";
 import RouteModal from "app/core/RouteModal";
+import SignupGroupPage from "app/groups/SignupGroupPage";
+import GroupsListPage from "app/groups/GroupsListPage";
+import GroupFormPage from "app/groups/GroupFormPage";
 
 export function AppRootRoutes() {
   const location = useLocation<any>();
@@ -41,6 +44,18 @@ export function AppRootRoutes() {
         <ProtectedRoute
           component={SetlistViewPage}
           path="/setlist/:id/:songIndex?"
+          exact
+        />
+        <Route component={SignupGroupPage} path="/group/signup" exact />
+        <ProtectedRoute component={GroupsListPage} path="/admin/groups" exact />
+        <ProtectedRoute
+          component={GroupFormPage}
+          path="/admin/group/new"
+          exact
+        />
+        <ProtectedRoute
+          component={GroupFormPage}
+          path="/admin/group/:id/edit"
           exact
         />
         <Redirect from="/" to="/songs" />

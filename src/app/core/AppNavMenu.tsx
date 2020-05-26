@@ -4,16 +4,16 @@ import {
   List,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
 } from "@material-ui/core";
 import classnames from "classnames";
 import ListItemLink from "lib/layout/ListItemLink";
 import Home from "@material-ui/icons/Home";
 import { WithWidth } from "lib/layout/WithWidth";
 import styled from "styled-components/macro";
-// import { isUserAdmin, isUserWorkingAs } from "../user/userUtils";
+import { isUserAdmin, isUserWorkingAs } from "../user/userUtils";
 import { useUserData } from "lib/hooks/useUserData";
-// import AdminMenu from "./admin/AdminMenu";
+import AdminMenu from "app/admin/AdminMenu";
 import SongsNavMenu from "app/songs/menu/SongsNavMenu";
 import SetlistsNavMenu from "app/setlists/menu/SetlistsNavMenu";
 import LoginMenuList from "app/session/LoginMenuList";
@@ -64,7 +64,7 @@ export function NavMenuItems({ user }) {
       <Divider />
       <SetlistsNavMenu />
       <Divider />
-      {/* {isUserAdmin(user) && !isUserWorkingAs(user) && <AdminMenu />} */}
+      {isUserAdmin(user) && !isUserWorkingAs(user) && <AdminMenu />}
     </>
   );
 }
@@ -106,12 +106,12 @@ export function AppNavMenu(props: NavMenuProps) {
             variant={variant}
             classes={{
               paper: classnames("drawerPaper", {
-                drawerPaperHidden: navMenuHidden
-              })
+                drawerPaperHidden: navMenuHidden,
+              }),
             }}
             ModalProps={{ keepMounted: true }}
             className={classnames("print-hidden", {
-              drawerHidden: navMenuHidden
+              drawerHidden: navMenuHidden,
             })}
           >
             <NavMenuTitle>{config.appName}</NavMenuTitle>
