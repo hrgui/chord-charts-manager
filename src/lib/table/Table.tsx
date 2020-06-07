@@ -19,6 +19,7 @@ import {
 import FilterListIcon from "@material-ui/icons/FilterList";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { Alert } from "@material-ui/lab";
 
 function DefaultColumnFilter({ column: { filterValue, setFilter } }) {
   return (
@@ -211,7 +212,9 @@ function UnstyledTable({
               <TableRow>
                 <TableCell colSpan={columns?.length}>
                   <div className="emptyMessage">
-                    <h1 className="emptyHeader">{errorText}</h1>
+                    <Alert variant="filled" severity="error">
+                      {errorText}
+                    </Alert>
                   </div>
                 </TableCell>
               </TableRow>

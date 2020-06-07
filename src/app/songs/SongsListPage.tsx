@@ -33,6 +33,16 @@ class SongTitleCell extends React.Component<any, any> {
   }
 }
 
+export const GET_SONGS_QUERY = gql`
+  query getSongs {
+    songs {
+      ...Song
+    }
+  }
+
+  ${SongFragment}
+`;
+
 export function SongListContainer({
   addToSetlistMode,
   onAddSong,
@@ -41,15 +51,7 @@ export function SongListContainer({
   onAddSong?;
 }) {
   const { t } = useTranslation();
-  const { error, loading, data } = useQuery(gql`
-    query getSongs {
-      songs {
-        ...Song
-      }
-    }
-
-    ${SongFragment}
-  `);
+  const { error, loading, data } = useQuery(GET_SONGS_QUERY);
 
   const columns = React.useMemo(() => {
     return [

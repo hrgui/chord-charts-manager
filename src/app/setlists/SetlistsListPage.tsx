@@ -16,6 +16,16 @@ interface SetlistsListPageProps {
   isAdmin?: boolean;
 }
 
+export const GET_SETLISTS_QUERY = gql`
+  query getSetlists {
+    setlists {
+      ...Setlist
+    }
+  }
+
+  ${SetlistFragment}
+`;
+
 export interface SetlistsTableProps {
   setlists;
   isLoading?;
@@ -157,18 +167,7 @@ export function SetlistListContainer({
   song_id?;
   onRequestClose?;
 }) {
-  const { error, loading, data } = useQuery(
-    gql`
-      query getSetlists {
-        setlists {
-          ...Setlist
-        }
-      }
-
-      ${SetlistFragment}
-    `
-  );
-
+  const { error, loading, data } = useQuery(GET_SETLISTS_QUERY);
   const setlists = data?.setlists || [];
 
   return (

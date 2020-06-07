@@ -1,27 +1,43 @@
 import React from "react";
 import { renderWithAppController as render } from "testUtils/renderWithAppController";
-import SetlistsListPage from "./SetlistsListPage";
+import SetlistsListPage, { GET_SETLISTS_QUERY } from "./SetlistsListPage";
 import { wait } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 
-test("should have 3 Setlists if i provided it 3 Setlists from the API", async () => {
-  const date = new Date().toISOString();
+function createSetlist(overrides) {
+  return {
+    id: "1",
+    title: "Setlist 1",
+    leader: "Test",
+    date: new Date().toISOString(),
+    songs: [],
+    settings: {},
+    session: "english",
+    notes: "",
+    share: {},
+    __typename: "Setlist",
+    ...overrides,
+  };
+}
+
+it("should have 3 Setlists if i provided it 3 Setlists from the API", async () => {
   const { getByText } = render(<SetlistsListPage />, {
-    gqlContext: () => {
-      return {
-        api: {
-          setlist: {
-            list: () => {
-              return [
-                { id: "1", title: "Setlist 1", leader: "Test", date },
-                { id: "2", title: "Setlist 2", leader: "Test", date },
-                { id: "3", title: "Setlist 3", leader: "test", date }
-              ];
-            }
-          }
-        }
-      };
-    }
+    gqlMocks: [
+      {
+        request: {
+          query: GET_SETLISTS_QUERY,
+          variables: {},
+        },
+        result: {
+          data: {
+            setlists: [
+              createSetlist({ id: "1", title: "Setlist 1" }),
+              createSetlist({ id: "2", title: "Setlist 2" }),
+              createSetlist({ id: "3", title: "Setlist 3" }),
+            ],
+          },
+        },
+      },
+    ],
   });
   await wait();
   expect(getByText(/Setlist 1/)).toBeInTheDocument();
@@ -29,70 +45,68 @@ test("should have 3 Setlists if i provided it 3 Setlists from the API", async ()
   expect(getByText(/Setlist 3/)).toBeInTheDocument();
 });
 
-test("should not blow up if i return back empty array", async () => {
+it("should not blow up if i return back empty array", async () => {
   const { getByText } = render(<SetlistsListPage />, {
-    gqlContext: () => {
-      return {
-        api: {
-          setlist: {
-            list: () => {
-              return [];
-            }
-          }
-        }
-      };
-    }
+    gqlMocks: [
+      {
+        request: {
+          query: GET_SETLISTS_QUERY,
+        },
+        result: {
+          data: {
+            setlists: [],
+          },
+        },
+      },
+    ],
   });
   await wait();
   expect(getByText(/Empty in setlists/)).toBeInTheDocument();
 });
 
-test("should be ok if list was async", async () => {
-  const date = new Date().toISOString();
-  jest.useFakeTimers();
-  const { getByText } = await render(<SetlistsListPage />, {
-    gqlContext: () => {
-      return {
-        api: {
-          setlist: {
-            list: async () => {
-              return new Promise(resolve => {
-                setTimeout(() => {
-                  resolve([
-                    { id: "1", title: "Setlist 1", leader: "Test", date },
-                    { id: "2", title: "Setlist 2", leader: "test", date },
-                    { id: "3", title: "Setlist 3", leader: "Test", date }
-                  ]);
-                }, 1000);
-              });
-            }
-          }
-        }
-      };
-    }
+it("should be ok if there is a slight delay", async () => {
+  const { getByText, rerender } = render(<SetlistsListPage />, {
+    gqlMocks: [
+      {
+        request: {
+          query: GET_SETLISTS_QUERY,
+          variables: {},
+        },
+        delay: 10,
+        result: {
+          data: {
+            setlists: [
+              createSetlist({ id: "1", title: "Setlist 1" }),
+              createSetlist({ id: "2", title: "Setlist 2" }),
+              createSetlist({ id: "3", title: "Setlist 3" }),
+            ],
+          },
+        },
+      },
+    ],
   });
-  await act(async () => {
-    await wait(() => null, { timeout: 1000 });
-    jest.runAllTimers();
-  });
+  await wait(() => null, { timeout: 100 });
+  rerender(<SetlistsListPage />);
+  await wait(() => null, { timeout: 100 });
+  expect(getByText(/Setlist 1/)).toBeInTheDocument();
   expect(getByText(/Setlist 2/)).toBeInTheDocument();
-  jest.useRealTimers();
+  expect(getByText(/Setlist 3/)).toBeInTheDocument();
 });
 
-test("should show error if the API errored", async () => {
-  const { getByText } = await render(<SetlistsListPage />, {
-    gqlContext: () => {
-      return {
-        api: {
-          setlist: {
-            list: () => {
-              throw new Error("Error");
-            }
-          }
-        }
-      };
-    }
+it("should show error if there is an error", async () => {
+  const { rerender, getByText } = render(<SetlistsListPage />, {
+    gqlMocks: [
+      {
+        request: {
+          query: GET_SETLISTS_QUERY,
+          variables: {},
+        },
+        error: new Error("Some error"),
+      },
+    ],
   });
-  await wait();
+  await wait(() => null, { timeout: 100 });
+  rerender(<SetlistsListPage />);
+  await wait(() => null, { timeout: 100 });
   expect(getByText(/An error occurred/)).toBeInTheDocument();
 });

@@ -3,9 +3,9 @@
 
 
 "@apollo/client@^3.0.0-beta.23", "@apollo/client@^3.0.0-beta.41":
-  version "3.0.0-beta.50"
-  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-beta.50.tgz#1b1de6e9d2380fda344f75cd3d80a9fdd0589fb1"
-  integrity sha512-sjLd+d0bVPnmlR5UYQ0LNamVcdCPSgRB6gyt1IByIfp5Q8qPlpM0uZiMQerhSQrfuDVhgQoLnfv13S3/CoJhUQ==
+  version "3.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.0.0-rc.2.tgz#2534eac9d430200f795a3849c187a7a1a946f90d"
+  integrity sha512-bYr2JUVAebAj0C8vaR/OyETomagxi7/CikSwuzULmO4EokKG54ir+5o71FYtJijd9CnzSTjvwmeoxL4zQ70uAQ==
   dependencies:
     "@types/zen-observable" "^0.8.0"
     "@wry/equality" "^0.1.9"
@@ -41,15 +41,6 @@
     "@apollo/react-common" "^3.1.4"
     "@wry/equality" "^0.1.9"
     ts-invariant "^0.4.4"
-    tslib "^1.10.0"
-
-"@apollo/react-testing@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@apollo/react-testing/-/react-testing-3.1.4.tgz#f2e1b9b65a0bd773facf54db4fdb5995d162a72a"
-  integrity sha512-1eKjN36UfIAnBVmfLbl12vQ/eCjTqYdaU95chGIQzT2uHd5BnasJu0z+MwXBrEs57A9WY9mFvLZxdjzQJXaacA==
-  dependencies:
-    "@apollo/react-common" "^3.1.4"
-    fast-json-stable-stringify "^2.0.0"
     tslib "^1.10.0"
 
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":

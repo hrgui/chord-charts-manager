@@ -2,10 +2,7 @@
   "name": "@hrgui/chord-charts-manager",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@apollo/link-context": "^2.0.0-beta.3",
-    "@apollo/react-testing": "^3.1.4"
-  },
+  "dependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -30,6 +27,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.0.0-beta.41",
+    "@apollo/link-context": "^2.0.0-beta.3",
     "@apollo/react-hooks": "^3.1.3",
     "@firebase/component": "^0.1.8",
     "@hrgui/chord-charts": "^1.0.0",
