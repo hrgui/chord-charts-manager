@@ -1,5 +1,5 @@
 import React from "react";
-import { Field } from "lib/form/Field";
+import { FastField as Field } from "formik";
 import {
   Button,
   Dialog,
@@ -12,7 +12,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import styled from "styled-components";
@@ -63,11 +63,13 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
 
   return (
     <>
-      <Dialog open={isDialogOpen} onClose={e => handleClose()}>
+      <Dialog open={isDialogOpen} onClose={(e) => handleClose()}>
         <DialogTitle>Sharing Settings</DialogTitle>
 
         <StyledDialogContent>
-          <Button onClick={e => onChangeRole(user.currentGroupId, currentRole)}>
+          <Button
+            onClick={(e) => onChangeRole(user.currentGroupId, currentRole)}
+          >
             Share with Current Group
           </Button>
           <ActionBar>
@@ -75,17 +77,17 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
               placeholder="Enter UID"
               fullWidth
               value={currentTextFieldValue}
-              onChange={e => setTextFieldValue(e.target.value)}
+              onChange={(e) => setTextFieldValue(e.target.value)}
             />
             <StyledNativeSelect
-              onChange={e => setRole(e.target.value)}
+              onChange={(e) => setRole(e.target.value)}
               value={currentRole}
             >
               <option value="editor">Editor</option>
               <option value="reader">Reader</option>
             </StyledNativeSelect>
             <Button
-              onClick={e => onChangeRole(currentTextFieldValue, currentRole)}
+              onClick={(e) => onChangeRole(currentTextFieldValue, currentRole)}
             >
               Add
             </Button>
@@ -98,14 +100,14 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
               <col style={{ width: "5%" }} />
             </colgroup>
             <TableBody>
-              {shareValues.map(key => (
+              {shareValues.map((key) => (
                 <TableRow key={key}>
                   <TableCell key={key}>
                     {key === user.currentGroupId ? "Current Group" : key}
                   </TableCell>
                   <TableCell>
                     <NativeSelect
-                      onChange={e => onChangeRole(key, e.target.value)}
+                      onChange={(e) => onChangeRole(key, e.target.value)}
                       value={newShareValue[key]}
                     >
                       <option value="editor">Editor</option>
@@ -114,7 +116,7 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
                   </TableCell>
                   <TableCell>
                     <IconButton
-                      onClick={e => {
+                      onClick={(e) => {
                         onDelete(key);
                       }}
                     >
@@ -139,10 +141,13 @@ const ShareDialog = ({ user, value = {}, onChange }: any) => {
         style={{
           display: "flex",
           flexDirection: "row-reverse",
-          marginBottom: 16
+          marginBottom: 16,
         }}
       >
-        <Button variant="outlined" onClick={e => setDialogOpen(!isDialogOpen)}>
+        <Button
+          variant="outlined"
+          onClick={(e) => setDialogOpen(!isDialogOpen)}
+        >
           Share
         </Button>
       </div>
@@ -154,20 +159,17 @@ const ShareBarField = ({ name }) => {
   const user = useUserData() || {};
 
   return (
-    <Field
-      name={name}
-      render={({ field, form }) => {
+    <Field name={name}>
+      {({ field, form }) => {
         return (
           <ShareDialog
             user={user}
-            onChange={v => form.setFieldValue(field.name, v)}
+            onChange={(v) => form.setFieldValue(field.name, v)}
             value={field.value}
           />
         );
-
-        // return JSON.stringify(field);
       }}
-    />
+    </Field>
   );
 };
 

@@ -13,8 +13,7 @@ import {
   IconButton,
   Tooltip,
 } from "@material-ui/core";
-import { FieldArray } from "formik";
-import { Field } from "lib/form/Field";
+import { FieldArray, FastField as Field } from "formik";
 import Delete from "@material-ui/icons/Delete";
 import Check from "@material-ui/icons/Check";
 import AddUser from "@material-ui/icons/PersonAdd";
@@ -204,9 +203,8 @@ const MembersField = (props: MembersFieldProps) => {
   return (
     <StyledFormControl fullWidth>
       <StyledInputLabel>{label}</StyledInputLabel>
-      <Field
-        name={name}
-        render={({ field, form }) => (
+      <Field name={name}>
+        {(field, form) => (
           <MembersTableFieldArray
             handleMoveToMember={(member) => {
               const members = form.values[pendingTo];
@@ -222,7 +220,7 @@ const MembersField = (props: MembersFieldProps) => {
             value={field.value}
           />
         )}
-      />
+      </Field>
     </StyledFormControl>
   );
 };

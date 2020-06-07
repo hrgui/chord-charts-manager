@@ -1,15 +1,20 @@
 import * as React from "react";
-import { Field, FieldProps } from "lib/form/Field";
+
+import { FastField as Field, FieldConfig } from "formik";
+
 import { TextField } from "@material-ui/core";
 import { AbcNotationView } from "../components/AbcNotationView";
 
-interface AbcTextFieldProps extends FieldProps {}
+interface AbcTextFieldProps extends FieldConfig {
+  label?;
+  fullWidth?;
+}
 
-const AbcTextField: React.SFC<AbcTextFieldProps> = props => {
+const AbcTextField: React.SFC<AbcTextFieldProps> = (props) => {
   const { name, ...otherProps } = props;
   return (
-    <Field
-      render={({ field }) => {
+    <Field name={name} {...otherProps}>
+      {({ field }) => {
         return (
           <div>
             <TextField
@@ -22,9 +27,7 @@ const AbcTextField: React.SFC<AbcTextFieldProps> = props => {
           </div>
         );
       }}
-      name={name}
-      {...otherProps}
-    />
+    </Field>
   );
 };
 
