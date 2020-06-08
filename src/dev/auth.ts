@@ -19,6 +19,7 @@ export function getDevAuthToken() {
 
 /**
  * Creates an unsecured JWT (FOR dev purposes only)
+ * This is borrowed from @firebase/testing.
  * @param auth
  */
 export function createUnsecuredJwt(auth: object): string {
