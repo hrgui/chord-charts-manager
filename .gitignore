@@ -29,3 +29,4 @@ firebase-debug.log
 *-debug.log
 
 app-config.json
+cypress/integration/examples
