@@ -20,13 +20,14 @@ interface SongViewProps {
   lyricsDisabled?: boolean;
   chordsDisabled?: boolean;
   onChangeSettings?: any;
+  screenWrap?: boolean;
 }
 
 export const SongViewKey = ({
   overrideKey,
   onChange,
   className,
-  classes
+  classes,
 }: {
   overrideKey;
   onChange;
@@ -59,6 +60,14 @@ const StyledWrapper = styled.div`
   &.Wrapper-Mobile {
     flex-direction: column-reverse;
   }
+
+  .screenWrap {
+    display: flex;
+    flex-flow: column;
+    height: calc(100vh - 96px);
+    width: 100vw;
+    flex-wrap: wrap;
+  }
 `;
 
 const StyledConnectedYoutubeView = styled(ConnectedYoutubeView)`
@@ -79,14 +88,17 @@ function Song({
   sectionsSettings = {},
   setSectionSettings,
   chordsDisabled,
-  lyricsDisabled
+  lyricsDisabled,
+  screenWrap,
 }) {
   if (!sections) {
     return null;
   }
 
   return (
-    <div className="song-view-container">
+    <div
+      className={classnames("song-view-container", { screenWrap: screenWrap })}
+    >
       {sections.map((section, i) => {
         const sectionSettings: any = sectionsSettings[i] || {};
 
@@ -117,7 +129,8 @@ const SongView = (props: SongViewProps) => {
     settings = {},
     lyricsDisabled: _lyricsDisabled = false,
     chordsDisabled: _chordsDisabled = false,
-    onChangeSettings = () => null
+    screenWrap: _screenWrap = false,
+    onChangeSettings = () => null,
   } = props;
   const [sectionsSettings, _setSectionSettings] = React.useState(
     settings.sectionsSettings || {}
@@ -130,6 +143,9 @@ const SongView = (props: SongViewProps) => {
   );
   const [chordsDisabled, setChordsDisabled] = React.useState(
     settings.chordsDisabled || _chordsDisabled
+  );
+  const [screenWrap, setScreenWrap] = React.useState(
+    settings.screenWrap || _screenWrap
   );
 
   React.useEffect(() => {
@@ -150,7 +166,7 @@ const SongView = (props: SongViewProps) => {
   function setSectionSettings({ index, hide }) {
     const sectionSettings = {
       ...(sectionsSettings[index] || {}),
-      ...{ index, hide }
+      ...{ index, hide },
     };
     const _sectionsSettings = { ...sectionsSettings, [index]: sectionSettings };
     _setSectionSettings(_sectionsSettings);
@@ -169,6 +185,12 @@ const SongView = (props: SongViewProps) => {
     onChangeSettings({ chordsDisabled: newChordsState }, data);
   }
 
+  function handleToggleScreenWrap() {
+    const newScreenWrapState = !screenWrap;
+    setScreenWrap(newScreenWrapState);
+    onChangeSettings({ screenWrap: newScreenWrapState }, data);
+  }
+
   if (!data) {
     data = {};
   }
@@ -185,7 +207,7 @@ const SongView = (props: SongViewProps) => {
           <StyledConnectedYoutubeView
             className={classnames({
               "ConnectedYoutubeView-tablet": width === "md",
-              "ConnectedYoutubeView-mobile": width === "sm" || width === "xs"
+              "ConnectedYoutubeView-mobile": width === "sm" || width === "xs",
             })}
             value={data.youtube}
           />
@@ -203,7 +225,7 @@ const SongView = (props: SongViewProps) => {
           <StyledWrapper
             className={classnames({
               "Wrapper-tablet": width === "md",
-              "Wrapper-Mobile": width === "sm" || width === "xs"
+              "Wrapper-Mobile": width === "sm" || width === "xs",
             })}
           >
             {ReactDOM.createPortal(
@@ -213,6 +235,8 @@ const SongView = (props: SongViewProps) => {
                 handleSetSectionSettings={setSectionSettings}
                 chordsDisabled={chordsDisabled}
                 lyricsDisabled={lyricsDisabled}
+                screenWrap={screenWrap}
+                onToggleScreenWrap={handleToggleScreenWrap}
                 onToggleLyricsVisibility={handleToggleLyricsVisibility}
                 onToggleChordsVisibility={handleToggleChordsVisibility}
               />,
@@ -230,10 +254,10 @@ const SongView = (props: SongViewProps) => {
                 classes={{
                   root: "SongViewKey-root",
                   select: "SongViewKey-root",
-                  icon: "SongViewKey-icon"
+                  icon: "SongViewKey-icon",
                 }}
                 overrideKey={overrideKey}
-                onChange={e => {
+                onChange={(e) => {
                   setOverrideKey(e.target.value);
                 }}
               />,
@@ -250,6 +274,7 @@ const SongView = (props: SongViewProps) => {
                 <AppBarSubtitle>{data.artist}</AppBarSubtitle>
               </div>
               <Song
+                screenWrap={screenWrap}
                 lyricsDisabled={lyricsDisabled}
                 chordsDisabled={chordsDisabled}
                 setSectionSettings={setSectionSettings}

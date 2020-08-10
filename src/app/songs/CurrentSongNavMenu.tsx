@@ -4,7 +4,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Divider
+  Divider,
 } from "@material-ui/core";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
@@ -27,7 +27,7 @@ export function CurrentSongNavMenuPlaceholder() {
 export function SongSectionsNavMenu({
   sections,
   sectionsSettings,
-  onSetSectionSettings
+  onSetSectionSettings,
 }: {
   sections?;
   sectionsSettings?;
@@ -50,10 +50,10 @@ export function SongSectionsNavMenu({
           <ListItem
             key={i}
             button
-            onClick={e => {
+            onClick={(e) => {
               onSetSectionSettings({
                 index: i,
-                hide: !sectionSettings.hide
+                hide: !sectionSettings.hide,
               });
             }}
           >
@@ -74,8 +74,10 @@ export interface CurrentSongNavMenuProps {
   handleSetSectionSettings: ({ index, hide }) => any;
   onToggleLyricsVisibility;
   onToggleChordsVisibility;
+  onToggleScreenWrap;
   chordsDisabled;
   lyricsDisabled;
+  screenWrap;
 }
 
 export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
@@ -88,9 +90,11 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
   const { toggleControlsPanel } = useAppBarActions();
   const {
     onToggleChordsVisibility,
+    onToggleScreenWrap,
     onToggleLyricsVisibility,
     chordsDisabled,
-    lyricsDisabled
+    lyricsDisabled,
+    screenWrap,
   } = props;
 
   const { song, handleSetSectionSettings, sectionsSettings } = props;
@@ -100,7 +104,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
     <List dense>
       <ListSubheader>Song Controls</ListSubheader>
       <ListItemLink
-        onClick={e => toggleControlsPanel()}
+        onClick={(e) => toggleControlsPanel()}
         to={`/song/${id}/edit`}
       >
         <ListItemIcon>
@@ -131,7 +135,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
       <Divider />
       <ListItem
         button
-        onClick={e => {
+        onClick={(e) => {
           toggleYoutube();
         }}
       >
@@ -144,7 +148,18 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
       </ListItem>
       <ListItem
         button
-        onClick={e => {
+        onClick={(e) => {
+          onToggleScreenWrap();
+        }}
+      >
+        <ListItemIcon>{screenWrap ? <ToggleOn /> : <ToggleOff />}</ListItemIcon>
+        <ListItemText
+          primary={`${t("screenWrap")}: ${screenWrap ? t("on") : t("off")}`}
+        />
+      </ListItem>
+      <ListItem
+        button
+        onClick={(e) => {
           onToggleLyricsVisibility();
         }}
       >
@@ -157,7 +172,7 @@ export function CurrentSongNavMenu(props: CurrentSongNavMenuProps) {
       </ListItem>
       <ListItem
         button
-        onClick={e => {
+        onClick={(e) => {
           onToggleChordsVisibility();
         }}
       >
