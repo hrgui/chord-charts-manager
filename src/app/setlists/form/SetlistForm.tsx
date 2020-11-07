@@ -103,12 +103,12 @@ export const SetlistForm = (props: ISetlistFormProps) => {
                             form.setFieldValue("settings", {
                               ...form.values.settings,
                               [songId]: {
-                                ...form.values.settings[songId],
+                                ...form.values?.settings?.[songId],
                                 overrideKey: e.target.value,
                               },
                             });
                           }}
-                          settings={form.values.settings[songId]}
+                          settings={form.values?.settings?.[songId]}
                           key={index}
                           index={index}
                           songId={songId}
