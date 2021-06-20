@@ -10,7 +10,8 @@ const authzLink = setContext(async (operation, prevContext) => {
   return patchRequestWithToken();
 });
 
-const httpLink = new HttpLink({ uri: process.env.REACT_APP_GRAPHQL_API });
+const httpLink = new HttpLink({ uri: import.meta.env.VITE_APP_GRAPHQL_API as string });
+console.log(import.meta.env.VITE_APP_GRAPHQL_API);
 
 const cache = new InMemoryCache();
 
@@ -25,7 +26,7 @@ export async function graphQLFetch(operation) {
   return makePromise(execute(client.link, operation));
 }
 
-if (process.env.NODE_ENV !== "production") {
+if (import.meta.env.DEV !== "production") {
   (window as any).client = client;
 }
 
