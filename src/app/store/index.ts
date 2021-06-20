@@ -8,12 +8,8 @@ export interface RootStoreModel {
   auth: AuthModel;
 }
 
-const {
-  useStoreActions,
-  useStore,
-  useStoreDispatch,
-  useStoreState,
-} = createTypedHooks<RootStoreModel>();
+const { useStoreActions, useStore, useStoreDispatch, useStoreState } =
+  createTypedHooks<RootStoreModel>();
 
 export function configureStore(config?: EasyPeasyConfig<any>) {
   let models = {
@@ -31,8 +27,7 @@ export function configureStore(config?: EasyPeasyConfig<any>) {
 
   initialState.uiState = {
     ...initialState.uiState,
-    darkMode:
-      window.localStorage.getItem(CHORD_CHARTS_DARK_MODE_KEY) === "true",
+    darkMode: window.localStorage.getItem(CHORD_CHARTS_DARK_MODE_KEY) === "true",
   };
 
   const store = createStore<RootStoreModel>(models, {
@@ -40,7 +35,7 @@ export function configureStore(config?: EasyPeasyConfig<any>) {
     initialState,
   });
 
-  if (process.env.NODE_ENV === "development") {
+  if (import.meta.env.DEV) {
     (window as any).store = store;
   }
 

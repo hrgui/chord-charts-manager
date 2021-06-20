@@ -2,7 +2,7 @@ import * as React from "react";
 import { Redirect } from "react-router-dom";
 import Page from "lib/layout/Page";
 
-import FirebaseAuth from "react-firebaseui/FirebaseAuth";
+import FirebaseAuth from "app/FirebaseAuth";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useIsAuthenticated } from "lib/hooks/useIsAuthenticated";
@@ -27,9 +27,9 @@ export const LoginPage: React.SFC<any> = ({ match, location }) => {
   const uiConfig = {
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
-    signInSuccessUrl
+    signInSuccessUrl,
   };
 
   if (hasAuth) {

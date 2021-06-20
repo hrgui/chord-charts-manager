@@ -21,13 +21,13 @@ i18n
     lng: "en-US",
     fallbackLng: "en-US",
     // TODO: change this to process.env.NODE_ENV === development when we finalize MVP
-    debug: process.env.NODE_ENV === "development",
+    debug: import.meta.env.DEV,
     interpolation: {
-      escapeValue: false // not needed for react as it escapes by default
+      escapeValue: false, // not needed for react as it escapes by default
     },
     preload: ["en-US"],
     load: "currentOnly",
-    ns: ["song", "setlist"]
+    ns: ["song", "setlist"],
   });
 
 export default i18n;

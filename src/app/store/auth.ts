@@ -1,17 +1,9 @@
-import {
-  isAuthenticated,
-  session,
-  getAuthToken,
-  logout,
-} from "lib/firebase/auth";
+import { isAuthenticated, session, getAuthToken, logout } from "lib/firebase/auth";
 import { action, thunk, Action, Thunk } from "easy-peasy";
 import { getDevUser } from "dev/auth";
 
 function _isAuthenticated() {
-  if (
-    process.env.NODE_ENV === "development" &&
-    process.env.REACT_APP_USE_DEV_AUTH === "1"
-  ) {
+  if (import.meta.env.DEV && import.meta.env.VITE_APP_USE_DEV_AUTH === "1") {
     return getDevUser();
   }
 
