@@ -1,6 +1,5 @@
 import React from "react";
 import ChordChartView from "./ChordChartView";
-import { AbcNotationView } from "./AbcNotationView";
 import Close from "@material-ui/icons/Close";
 import classnames from "classnames";
 import styled from "styled-components/macro";
@@ -54,7 +53,7 @@ export default ({
   songKey,
   hide,
   section,
-  onRequestHide
+  onRequestHide,
 }: SongSectionViewProps) => {
   if (hide) {
     return <span data-testid="sectionview-hidden" />;
@@ -64,11 +63,7 @@ export default ({
     <Section>
       <Title>
         {section.title && section.title.toUpperCase()}
-        <StyledClose
-          data-testid="songsection-close"
-          onClick={onRequestHide}
-          fontSize={"small"}
-        />
+        <StyledClose data-testid="songsection-close" onClick={onRequestHide} fontSize={"small"} />
       </Title>
       <SongSectionBody className={classnames("print-cc-body")}>
         {section.type !== "tab" && (
@@ -81,7 +76,6 @@ export default ({
           />
         )}
       </SongSectionBody>
-      {section.type === "abc" && <AbcNotationView value={section.body} />}
     </Section>
   );
 };

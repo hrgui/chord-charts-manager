@@ -1,26 +1,41 @@
 import * as React from "react";
 import Editor from "react-simple-code-editor";
-import { ReactChordChart } from "@hrgui/chord-charts-react";
-import { withTheme } from "@material-ui/core";
+import { wrap } from "@hrgui/chord-charts";
+import { useTheme } from "@material-ui/core";
+import styled from "styled-components/macro";
 
 interface ChordChartTextInputProps {
   value?: string;
   onValueChange?: (code) => any;
+  className?: string;
 }
 
-function chordChartHighlight(code) {
-  let songSection = new ReactChordChart(code, "C");
-  return songSection.asReactElements();
+function chordChartHighlight(input) {
+  return wrap(input, (x) => `<span class="chord">${x}</span>`);
 }
 
-const ChordChartTextInput = withTheme(
-  ({ value = "", theme, className, onValueChange = code => null }: any) => {
-    return (
+const Container = styled.div`
+  display: inherit; /* pass through div */
+  .chord {
+    font-family: "Roboto Mono", monospace;
+    color: ${({ theme }) => (theme.palette.type === "dark" ? "#add8e6" : "#2159df")};
+    font-weight: 800;
+  }
+`;
+
+const ChordChartTextInput = ({
+  value = "",
+  className,
+  onValueChange = (code) => null,
+}: ChordChartTextInputProps) => {
+  const theme = useTheme();
+  return (
+    <Container>
       <Editor
         className={className}
         value={value}
-        onValueChange={code => onValueChange(code)}
-        highlight={code => chordChartHighlight(code)}
+        onValueChange={(code) => onValueChange(code)}
+        highlight={(code) => chordChartHighlight(code)}
         style={{
           color: theme.palette.text.primary,
           minWidth: "100%",
@@ -29,11 +44,11 @@ const ChordChartTextInput = withTheme(
           marginBottom: 10,
           paddingBottom: 10,
           fontSize: 14,
-          borderBottom: "1px solid #ccc"
+          borderBottom: "1px solid #ccc",
         }}
       />
-    );
-  }
-);
+    </Container>
+  );
+};
 
 export default ChordChartTextInput;
