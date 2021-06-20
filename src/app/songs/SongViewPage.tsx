@@ -15,15 +15,8 @@ interface SongViewContainerProps {
 }
 
 export const SongViewContainer: React.SFC<SongViewContainerProps> = (props) => {
-  const { loading: isLoading, error: isError, data } = useGetSongQuery(
-    props.id
-  );
-  const {
-    isInSetlist,
-    isActiveInSetlist,
-    settings,
-    onChangeSettings = () => null,
-  } = props;
+  const { loading: isLoading, error: isError, data } = useGetSongQuery(props.id);
+  const { isInSetlist, isActiveInSetlist, settings, onChangeSettings = () => null } = props;
   useTitle(`View Song: ${isLoading ? props.id : data?.song.title}`);
 
   if (isInSetlist && !isActiveInSetlist) {
@@ -48,7 +41,7 @@ export const SongViewContainer: React.SFC<SongViewContainerProps> = (props) => {
 };
 
 const SongViewPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const [loading] = useSetPageLayout("song", [id]);
   useTitle(`View Song ${id}`); // HACK: this is to make mobile view work right, resetPageInfo causing issue
 

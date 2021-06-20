@@ -58,12 +58,9 @@ const SongEditPage: React.SFC<SongFormPageProps> = (props) => {
         })
       }
       onSubmitSuccess={(res, values) => {
-        enqueueSnackbar(
-          t(`song:message/saveSuccess`, { song: values.title || values.id }),
-          {
-            variant: "success",
-          }
-        );
+        enqueueSnackbar(t(`song:message/saveSuccess`, { song: values.title || values.id }), {
+          variant: "success",
+        });
         props.navigate(`/song/${props.id}/view`);
       }}
       onSubmitError={(e) => {
@@ -127,12 +124,9 @@ const SongNewPage: React.SFC<SongFormPageProps> = (props) => {
         })
       }
       onSubmitSuccess={(_, values) => {
-        enqueueSnackbar(
-          t(`song:message/saveSuccess`, { song: values.title || values.id }),
-          {
-            variant: "success",
-          }
-        );
+        enqueueSnackbar(t(`song:message/saveSuccess`, { song: values.title || values.id }), {
+          variant: "success",
+        });
         props.navigate(`/songs`);
       }}
       onSubmitError={(e) => {
@@ -147,17 +141,12 @@ const SongNewPage: React.SFC<SongFormPageProps> = (props) => {
 };
 
 export default (props) => {
-  const { id } = useParams();
+  const { id } = useParams<any>();
   const history = useHistory();
   const user = useUserData() || {};
   const SongFormPage = id ? SongEditPage : SongNewPage;
 
   return (
-    <SongFormPage
-      currentGroupId={user.currentGroupId}
-      navigate={history.push}
-      id={id}
-      {...props}
-    />
+    <SongFormPage currentGroupId={user.currentGroupId} navigate={history.push} id={id} {...props} />
   );
 };
