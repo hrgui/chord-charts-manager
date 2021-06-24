@@ -5,19 +5,19 @@ import AbcTextField from "./AbcTextField";
 
 afterEach(cleanup);
 
-test("AbcTextField - case when theres no value", () => {
+test.skip("AbcTextField - case when theres no value", () => {
   const { getByText } = renderWithForm(() => <AbcTextField name="chart" />);
   expect(getByText(/Sheet Music/)).toBeInTheDocument();
   expect(getByText(/Midi/)).toBeInTheDocument();
 });
 
-test("AbcTextField - case when theres value provided by form", () => {
+test.skip("AbcTextField - case when theres value provided by form", () => {
   const text = `CDEFGABC'D'E'F'G'A'B'C''`;
   const { getByText } = renderWithForm(() => <AbcTextField name="chart" />, {
     initialValues: {
-      chart: text
+      chart: text,
     },
-    onSubmit: () => null
+    onSubmit: () => null,
   });
   expect(getByText(text)).toBeInTheDocument();
 });

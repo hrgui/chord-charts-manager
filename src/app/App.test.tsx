@@ -1,16 +1,14 @@
 import React from "react";
-import { render, act, wait } from "@testing-library/react";
+import { render, act, waitFor } from "@testing-library/react";
 import App from "./App";
 
 const observeMock = {
   observe: () => null,
-  disconnect: () => null // maybe not needed
+  disconnect: () => null, // maybe not needed
 };
 
 beforeEach(() => {
-  (window as any).IntersectionObserver = jest
-    .fn()
-    .mockImplementation(() => observeMock);
+  (window as any).IntersectionObserver = jest.fn().mockImplementation(() => observeMock);
 });
 
 test("renders learn react if passed in learn react", async () => {
@@ -18,8 +16,9 @@ test("renders learn react if passed in learn react", async () => {
   act(() => {
     el = render(<App>learn react</App>);
   });
-  await wait();
-  const { getByText } = el;
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  await waitFor(() => {
+    const { getByText } = el;
+    const linkElement = getByText(/learn react/i);
+    return expect(linkElement).toBeInTheDocument();
+  });
 });

@@ -18,7 +18,7 @@ const Container = styled.div`
   display: inherit; /* pass through div */
   .chord {
     font-family: "Roboto Mono", monospace;
-    color: ${({ theme }) => (theme.palette.type === "dark" ? "#add8e6" : "#2159df")};
+    color: ${({ theme }) => (theme?.palette?.type === "dark" ? "#add8e6" : "#2159df")};
     font-weight: 800;
   }
 `;

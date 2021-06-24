@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 
-if (import.meta.env.DEV) {
+if (process.env.DEV) {
   (window as any).firebase = firebase;
 }
 

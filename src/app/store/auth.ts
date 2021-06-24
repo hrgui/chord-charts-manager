@@ -3,7 +3,7 @@ import { action, thunk, Action, Thunk } from "easy-peasy";
 import { getDevUser } from "dev/auth";
 
 function _isAuthenticated() {
-  if (import.meta.env.DEV && import.meta.env.VITE_APP_USE_DEV_AUTH === "1") {
+  if (process.env.DEV && process.env.VITE_APP_USE_DEV_AUTH === "1") {
     return getDevUser();
   }
 

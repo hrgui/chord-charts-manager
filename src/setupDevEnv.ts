@@ -1,4 +1,4 @@
-if (import.meta.env.DEV && (window as any).Cypress) {
+if (process.env.DEV && (window as any).Cypress) {
   require("whatwg-fetch");
 }
 

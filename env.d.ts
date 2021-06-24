@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 interface ImportMetaEnv {
   VITE_APP_GRAPHQL_API: string;
   VITE_APP_USE_DEV_AUTH: number;

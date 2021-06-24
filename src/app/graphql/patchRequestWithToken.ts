@@ -6,12 +6,12 @@ export async function patchRequestWithToken() {
   try {
     token = await getAuthToken();
   } catch (e) {
-    if (!import.meta.env.DEV) {
+    if (!process.env.DEV) {
       throw e;
     }
   }
 
-  if (!token && import.meta.env.DEV) {
+  if (!token && process.env.DEV) {
     token = getDevAuthToken();
   }
   if (!token) {

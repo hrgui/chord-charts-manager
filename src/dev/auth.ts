@@ -2,16 +2,16 @@ import * as util from "@firebase/util";
 
 export function getDevUser() {
   console.log({
-    uid: import.meta.env.VITE_APP_DEV_AUTH_UID,
-    displayName: import.meta.env.VITE_APP_DEV_AUTH_DISPLAY_NAME,
-    currentGroupId: import.meta.env.VITE_APP_DEV_AUTH_CURRENT_GROUP_ID,
-    role: import.meta.env.VITE_APP_DEV_AUTH_ROLE,
+    uid: process.env.VITE_APP_DEV_AUTH_UID,
+    displayName: process.env.VITE_APP_DEV_AUTH_DISPLAY_NAME,
+    currentGroupId: process.env.VITE_APP_DEV_AUTH_CURRENT_GROUP_ID,
+    role: process.env.VITE_APP_DEV_AUTH_ROLE,
   });
   return {
-    uid: import.meta.env.VITE_APP_DEV_AUTH_UID,
-    displayName: import.meta.env.VITE_APP_DEV_AUTH_DISPLAY_NAME,
-    currentGroupId: import.meta.env.VITE_APP_DEV_AUTH_CURRENT_GROUP_ID,
-    role: import.meta.env.VITE_APP_DEV_AUTH_ROLE,
+    uid: process.env.VITE_APP_DEV_AUTH_UID,
+    displayName: process.env.VITE_APP_DEV_AUTH_DISPLAY_NAME,
+    currentGroupId: process.env.VITE_APP_DEV_AUTH_CURRENT_GROUP_ID,
+    role: process.env.VITE_APP_DEV_AUTH_ROLE,
   };
 }
 

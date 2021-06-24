@@ -1,5 +1,5 @@
 import React from "react";
-import { transpose, wrap } from "@hrgui/chord-charts";
+import { transpose, wrap, allChords } from "@hrgui/chord-charts";
 import styled from "styled-components/macro";
 
 interface Props {
@@ -19,18 +19,51 @@ const Container = styled.div`
   }
 `;
 
-function chordChartHighlight(input) {
-  return wrap(input, (x) => `<span class="chord">${x}</span>`);
+function chordChartHighlight(input, chordsDisabled, lyricsDisabled?) {
+  const contents = wrap(input, (x) => (chordsDisabled ? "" : `<span class="chord">${x}</span>`));
+
+  if (lyricsDisabled && !chordsDisabled) {
+    // const pre = document.createElement("pre");
+    // pre.innerHTML = contents;
+
+    // const allChildNodes = Array.from(pre.childNodes);
+
+    // for (const childNode of allChildNodes) {
+    //   if (childNode.nodeType === Node.TEXT_NODE) {
+    //     if (childNode.textContent?.trim() === "") {
+    //       continue; // retain the spaces - we check if we trim and its resolves to ""
+    //     }
+    //     console.log(childNode.textContent);
+    //     pre.removeChild(childNode);
+    //   }
+    // }
+
+    // return pre.textContent || "";
+
+    return allChords(input)
+      .map((x) => `<span class="chord">${x}</span>`)
+      .join(" ");
+  }
+
+  if (chordsDisabled && lyricsDisabled) {
+    return "";
+  }
+
+  return contents;
 }
 
-const ChordChartView = ({ value, overrideKey, songKey }: Props) => {
-  if (overrideKey && songKey !== overrideKey) {
+const ChordChartView = ({ value, overrideKey, songKey, chordsDisabled, lyricsDisabled }: Props) => {
+  if (overrideKey && songKey && songKey !== overrideKey) {
     value = transpose(value!, songKey!, overrideKey!);
   }
 
   return (
     <Container>
-      <pre dangerouslySetInnerHTML={{ __html: chordChartHighlight(value) }} />
+      <pre
+        dangerouslySetInnerHTML={{
+          __html: chordChartHighlight(value, chordsDisabled, lyricsDisabled),
+        }}
+      />
     </Container>
   );
 };

@@ -15,7 +15,6 @@ exports[`renders setlist actions given a setlist 1`] = `
         aria-hidden="true"
         class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall"
         focusable="false"
-        role="presentation"
         viewBox="0 0 24 24"
       >
         <path

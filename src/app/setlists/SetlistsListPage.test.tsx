@@ -1,7 +1,7 @@
 import React from "react";
 import { renderWithAppController as render } from "testUtils/renderWithAppController";
 import SetlistsListPage, { GET_SETLISTS_QUERY } from "./SetlistsListPage";
-import { wait } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 
 function createSetlist(overrides) {
   return {
@@ -39,10 +39,11 @@ it("should have 3 Setlists if i provided it 3 Setlists from the API", async () =
       },
     ],
   });
-  await wait();
-  expect(getByText(/Setlist 1/)).toBeInTheDocument();
-  expect(getByText(/Setlist 2/)).toBeInTheDocument();
-  expect(getByText(/Setlist 3/)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(getByText(/Setlist 1/)).toBeInTheDocument();
+    expect(getByText(/Setlist 2/)).toBeInTheDocument();
+    return expect(getByText(/Setlist 3/)).toBeInTheDocument();
+  });
 });
 
 it("should not blow up if i return back empty array", async () => {
@@ -60,8 +61,9 @@ it("should not blow up if i return back empty array", async () => {
       },
     ],
   });
-  await wait();
-  expect(getByText(/Empty in setlists/)).toBeInTheDocument();
+  await waitFor(() => {
+    return expect(getByText(/Empty in setlists/)).toBeInTheDocument();
+  });
 });
 
 it("should be ok if there is a slight delay", async () => {
@@ -85,12 +87,12 @@ it("should be ok if there is a slight delay", async () => {
       },
     ],
   });
-  await wait(() => null, { timeout: 100 });
   rerender(<SetlistsListPage />);
-  await wait(() => null, { timeout: 100 });
-  expect(getByText(/Setlist 1/)).toBeInTheDocument();
-  expect(getByText(/Setlist 2/)).toBeInTheDocument();
-  expect(getByText(/Setlist 3/)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(getByText(/Setlist 1/)).toBeInTheDocument();
+    expect(getByText(/Setlist 2/)).toBeInTheDocument();
+    return expect(getByText(/Setlist 3/)).toBeInTheDocument();
+  });
 });
 
 it("should show error if there is an error", async () => {
@@ -105,8 +107,8 @@ it("should show error if there is an error", async () => {
       },
     ],
   });
-  await wait(() => null, { timeout: 100 });
   rerender(<SetlistsListPage />);
-  await wait(() => null, { timeout: 100 });
-  expect(getByText(/An error occurred/)).toBeInTheDocument();
+  await waitFor(() => {
+    return expect(getByText(/An error occurred/)).toBeInTheDocument();
+  });
 });

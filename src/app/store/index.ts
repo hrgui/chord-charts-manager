@@ -35,7 +35,7 @@ export function configureStore(config?: EasyPeasyConfig<any>) {
     initialState,
   });
 
-  if (import.meta.env.DEV) {
+  if (process.env.DEV) {
     (window as any).store = store;
   }
 
